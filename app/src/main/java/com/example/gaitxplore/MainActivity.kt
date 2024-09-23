@@ -1,15 +1,18 @@
 package com.example.gaitxplore
 
+import android.content.pm.PackageManager
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.RecyclerView.Orientation
@@ -17,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView.Orientation
 class MainActivity : AppCompatActivity() , SensorEventListener{
 
     private lateinit var  sensorManager: SensorManager
-    private lateinit var  locationManager: SensorManager
+    private lateinit var  locationManager: LocationManager
 
     private lateinit var  xAcceleration : TextView
     private lateinit var  yAcceleration : TextView
@@ -112,9 +115,20 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
     }
 
-    override fun onSensorChanged(event: SensorEvent?)
-    {
-        TODO("Not yet implemented")
+    private val locationListener = object : LocationListener {
+        override fun onLocationChanged(location: Location) {
+            // Update GPS TextView with latitude, longitude, and speed
+
+            Latitute.text=location.latitude
+            Longitude.text=location.longitute
+            Speed.text=location.speed
+
+
+        }
+
+        override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {}
+        override fun onProviderEnabled(provider: String) {}
+        override fun onProviderDisabled(provider: String) {}
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int)
@@ -123,7 +137,22 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
     }
     private fun StartMeasurement()
     {
-        
+        IsRecording=true
+        btnActivate.text="Stop"
+
+        sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL)
+        sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR), SensorManager.SENSOR_DELAY_NORMAL)
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION) != PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(this, Manifest.permission.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION), 1)
+            return
+        }
+
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 0f,locationListener)
+
+
 
     }
     private fun StopMeasurement()
