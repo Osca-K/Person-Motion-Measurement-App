@@ -7,6 +7,17 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
+
+    private var acceleration = FloatArray(3)
+    private var orientation = FloatArray(3)
+    private var angularVelocity = FloatArray(3)
+    private var latitude: Double = 0.0
+    private var longitude: Double = 0.0
+    private var speed: Float = 0f
+
+    
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
