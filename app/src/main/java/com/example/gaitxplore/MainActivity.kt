@@ -1,5 +1,8 @@
 package com.example.gaitxplore
 
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
 import android.widget.Button
@@ -10,7 +13,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.RecyclerView.Orientation
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() , SensorEventListener{
 
     private lateinit var  sensorManager: SensorManager
     private lateinit var  locationManager: SensorManager
@@ -38,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
     private var IsRecording  =false
 
-    
+
 
 //    private var acceleration = FloatArray(3)
 //    private var orientation = FloatArray(3)
@@ -61,7 +64,50 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+        //Linking the textview for displaying the results with the ID from  UI of xml
+
+      // Accelration
+
+        xAcceleration=findViewById(R.id.tvXacceleration)
+        yAcceleration=findViewById(R.id.tvYacceleration)
+        zAcceleration=findViewById(R.id.tvZacceleration)
 
 
+     // Orientation
+        xOrientation=findViewById(R.id.tvXorientation)
+        yOrientation=findViewById(R.id.tvYorientation)
+        zOrientation=findViewById(R.id.tvZorientation)
+
+
+     // Angular velocity
+
+        xAngularVelocity=findViewById(R.id.tvXangularVelocity)
+        yAngularVelocity=findViewById(R.id.tvYangularVelocity)
+        zAngularVelocity=findViewById(R.id.tvZangularVelocity)
+
+    // GPS FOR POSTION AND SPEED
+
+      Latitute=findViewById(R.id.tvLatitude)
+      Longitude=findViewById(R.id.tvLongitude)
+      Speed=findViewById(R.id.tvSpeed)
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+    override fun onSensorChanged(event: SensorEvent?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+        TODO("Not yet implemented")
     }
 }
