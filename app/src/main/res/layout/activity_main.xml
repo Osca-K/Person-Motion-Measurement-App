@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".MainActivity">
+
+    <!-- Acceleration and Sub control for it -->
+
+    <TextView
+        android:id="@+id/tv_ori_z_value5"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="36dp"
+        android:background="@drawable/rounded_background"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="00:00:00"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_gyroscope2" />
+
+    <TextView
+        android:id="@+id/tv_ori_x_label6"
+
+        android:layout_width="wrap_content"
+        android:layout_height="31dp"
+        android:layout_marginStart="48dp"
+        android:text="Speed"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="503dp" />
+
+    <TextView
+        android:id="@+id/tv_ori_x_label4"
+
+        android:layout_height="31dp"
+        android:layout_marginStart="44dp"
+        android:text="Longitude"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="408dp" />
+
+    <TextView
+        android:id="@+id/tv_ori_x_value3"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_background"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="0.0"
+        tools:layout_editor_absoluteX="261dp"
+        tools:layout_editor_absoluteY="515dp" />
+
+    <TextView
+        android:id="@+id/tv_ori_x_label5"
+
+        android:layout_width="wrap_content"
+        android:layout_height="31dp"
+        android:layout_marginStart="48dp"
+        android:text="latitude"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="455dp" />
+
+    <TextView
+        android:id="@+id/tv_ori_z_value3"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="36dp"
+        android:background="@drawable/rounded_background"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="00:00:00"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_ori_z_value5" />
+
+    <TextView
+        android:id="@+id/tv_gyroscope2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GLOBAL POSITIONING SYSTEM"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="338dp" />
+
+    <TextView
+        android:id="@+id/tv_ori_y_value2"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_background"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="0.0"
+        tools:layout_editor_absoluteX="150dp"
+        tools:layout_editor_absoluteY="260dp" />
+
+    <TextView
+        android:id="@+id/tv_ori_z_value2"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_background"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="0.0"
+        tools:layout_editor_absoluteX="245dp"
+        tools:layout_editor_absoluteY="260dp" />
+
+    <TextView
+        android:id="@+id/tv_ori_y_label2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="θy"
+        tools:layout_editor_absoluteX="182dp"
+        tools:layout_editor_absoluteY="238dp" />
+
+    <TextView
+        android:id="@+id/tv_ori_x_value2"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_background"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="0.0"
+        tools:layout_editor_absoluteX="51dp"
+        tools:layout_editor_absoluteY="259dp" />
+
+    <TextView
+        android:id="@+id/tv_ori_x_label2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="θx"
+        tools:layout_editor_absoluteX="82dp"
+        tools:layout_editor_absoluteY="233dp" />
+
+    <TextView
+        android:id="@+id/tv_ori_z_label2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="θz"
+        tools:layout_editor_absoluteX="278dp"
+        tools:layout_editor_absoluteY="234dp" />
+
+    <TextView
+        android:id="@+id/tv_acceleration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="@string/acceleration"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_acc_y_value"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_background"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="0.0"
+        tools:layout_editor_absoluteX="152dp"
+        tools:layout_editor_absoluteY="56dp" />
+
+    <TextView
+        android:id="@+id/tv_acc_z_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="z"
+        tools:layout_editor_absoluteX="280dp"
+        tools:layout_editor_absoluteY="29dp" />
+
+    <TextView
+        android:id="@+id/tv_acc_z_value"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_background"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="0.0"
+        tools:layout_editor_absoluteX="247dp"
+        tools:layout_editor_absoluteY="56dp" />
+
+    <TextView
+        android:id="@+id/tv_acc_x_label"
+        android:layout_width="10dp"
+        android:layout_height="22dp"
+        android:text="X"
+        tools:layout_editor_absoluteX="85dp"
+        tools:layout_editor_absoluteY="29dp" />
+
+    <TextView
+        android:id="@+id/tv_acc_y_label"
+        android:layout_width="10dp"
+        android:layout_height="wrap_content"
+        android:text="Y"
+        tools:layout_editor_absoluteX="184dp"
+        tools:layout_editor_absoluteY="29dp" />
+
+    <TextView
+        android:id="@+id/tv_acc_x_value"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_background"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="0.0"
+        tools:layout_editor_absoluteX="53dp"
+        tools:layout_editor_absoluteY="56dp" />
+
+    <TextView
+        android:id="@+id/tv_orientation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ORIENTATION"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="134dp"
+        tools:layout_editor_absoluteY="107dp" />
+
+    <!-- X, Y, Z Values for Orientation -->
+
+    <!-- Gyroscope Section -->
+
+    <TextView
+        android:id="@+id/tv_ori_z_value"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_background"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="0.0"
+        tools:layout_editor_absoluteX="247dp"
+        tools:layout_editor_absoluteY="160dp" />
+
+    <TextView
+        android:id="@+id/tv_ori_z_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="θz"
+        tools:layout_editor_absoluteX="280dp"
+        tools:layout_editor_absoluteY="134dp" />
+
+    <TextView
+        android:id="@+id/tv_ori_x_value"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_background"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="0.0"
+        tools:layout_editor_absoluteX="53dp"
+        tools:layout_editor_absoluteY="159dp" />
+
+    <TextView
+        android:id="@+id/tv_ori_x_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="θx"
+        tools:layout_editor_absoluteX="84dp"
+        tools:layout_editor_absoluteY="133dp" />
+
+    <TextView
+        android:id="@+id/tv_ori_y_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="θy"
+        tools:layout_editor_absoluteX="184dp"
+        tools:layout_editor_absoluteY="138dp" />
+
+    <TextView
+        android:id="@+id/tv_ori_y_value"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_background"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="0.0"
+        tools:layout_editor_absoluteX="152dp"
+        tools:layout_editor_absoluteY="160dp" />
+
+
+    <!-- X, Y, Z Values for Gyroscope -->
+
+    <TextView
+        android:id="@+id/tv_gyroscope"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GYROSCOPE"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="145dp"
+        tools:layout_editor_absoluteY="210dp" />
+
+
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="48dp"
+        android:backgroundTint="@color/blue"
+        android:padding="8dp"
+        android:text="Start"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
