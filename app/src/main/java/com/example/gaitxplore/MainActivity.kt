@@ -4,6 +4,7 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.location.LocationManager
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -37,7 +38,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
     private lateinit var  Speed : TextView
 
 
-    private lateinit var  btnStar: Button
+    private lateinit var  btnActivate: Button
 
     private var IsRecording  =false
 
@@ -91,7 +92,15 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
       Longitude=findViewById(R.id.tvLongitude)
       Speed=findViewById(R.id.tvSpeed)
 
+        // Button
 
+        btnActivate=findViewById(R.id.btnRun)
+
+
+
+    // Sensors and locations managers
+        sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
+        locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
 
 
 
@@ -103,11 +112,22 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
     }
 
-    override fun onSensorChanged(event: SensorEvent?) {
+    override fun onSensorChanged(event: SensorEvent?)
+    {
         TODO("Not yet implemented")
     }
 
-    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int)
+    {
         TODO("Not yet implemented")
+    }
+    private fun StartMeasurement()
+    {
+        
+
+    }
+    private fun StopMeasurement()
+    {
+
     }
 }
