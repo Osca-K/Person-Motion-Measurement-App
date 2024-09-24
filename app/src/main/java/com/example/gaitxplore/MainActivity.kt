@@ -10,6 +10,7 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -18,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import kotlin.text.*
 
 
 class MainActivity : AppCompatActivity() , SensorEventListener{
@@ -70,6 +72,13 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
             insets
         }
 
+     // Trying to request permission ealry
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION), 1)
+        }
+
 
         //Linking the textview for displaying the results with the ID from  UI of xml
 
@@ -115,12 +124,12 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         {
             if (isRecording)
             {
-                StopMeasurement()
+                stopMeasurement()
 
             }
             else
             {
-                StartMeasurement()
+                startMeasurement()
             }
 
         }
@@ -135,13 +144,16 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         override fun onLocationChanged(location: Location) {
             // Update GPS TextView with latitude, longitude, and speed
 
-            Latitute.text= location.latitude.toString()
-            Longitude.text=location.longitude.toString()
-            Speed.text= location.speed.toString()
+
+
+            Latitute.text = String.format("%.3f", location.latitude)
+            Longitude.text = String.format("%.3f", location.longitude)
+            Speed.text = String.format("%.3f", location.speed)
 
 
         }
 
+        @Deprecated("Deprecated in Java")
         override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {}
         override fun onProviderEnabled(provider: String) {}
         override fun onProviderDisabled(provider: String) {}
@@ -151,9 +163,9 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         if (event != null) {
             when (event.sensor.type) {
                 Sensor.TYPE_ACCELEROMETER -> {
-                    xAcceleration.text = event.values[0].toString()
-                    yAcceleration.text = event.values[1].toString()
-                    zAcceleration.text = event.values[2].toString()
+                    xAcceleration.text = String.format("%.3f", event.values[0])
+                    yAcceleration.text = String.format("%.3f", event.values[1])
+                    zAcceleration.text = String.format("%.3f", event.values[2])
                 }
                 Sensor.TYPE_ROTATION_VECTOR -> {
                     val rotationMatrix = FloatArray(9)
@@ -162,14 +174,14 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                     val orientationAngles = FloatArray(3)
                     SensorManager.getOrientation(rotationMatrix, orientationAngles)
 
-                    xOrientation.text = Math.toDegrees(orientationAngles[0].toDouble()).toString()
-                    yOrientation.text = Math.toDegrees(orientationAngles[1].toDouble()).toString()
-                    zOrientation.text = Math.toDegrees(orientationAngles[2].toDouble()).toString()
+                    xOrientation.text = String.format("%.3f", Math.toDegrees(orientationAngles[0].toDouble()))
+                    yOrientation.text = String.format("%.3f", Math.toDegrees(orientationAngles[1].toDouble()))
+                    zOrientation.text = String.format("%.3f", Math.toDegrees(orientationAngles[2].toDouble()))
                 }
                 Sensor.TYPE_GYROSCOPE -> {
-                    xAngularVelocity.text = event.values[0].toString()
-                    yAngularVelocity.text = event.values[1].toString()
-                    zAngularVelocity.text = event.values[2].toString()
+                    xAngularVelocity.text = String.format("%.3f", event.values[0])
+                    yAngularVelocity.text = String.format("%.3f", event.values[1])
+                    zAngularVelocity.text = String.format("%.3f", event.values[2])
                 }
             }
         }
@@ -177,12 +189,12 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int)
     {
-        TODO("Not yet implemented")
+        //Empty for now
     }
-    private fun StartMeasurement()
+    private fun startMeasurement()
     {
-        isRecording=true
-        btnActivate.text="Stop"
+        isRecording = true
+        btnActivate.text = "Stop"
 
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL)
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR), SensorManager.SENSOR_DELAY_NORMAL)
@@ -195,16 +207,19 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
             return
         }
 
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 0f, locationListener)
-
-
-
+        // Check if the provider is enabled before requesting updates
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 0f, locationListener)
+        } else {
+            // Handle case where GPS provider is not enabled
+            // For example, show a message to the user or navigate to settings to enable GPS
+        }
     }
-    private fun StopMeasurement()
+    private fun stopMeasurement()
     {
 
         isRecording = false
-        btnActivate.text = "Start"
+        "Start".also { btnActivate.text = it }
 
 
         sensorManager.unregisterListener(this)
