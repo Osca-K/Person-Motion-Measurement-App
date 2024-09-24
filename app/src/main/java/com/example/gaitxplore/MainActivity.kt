@@ -5,12 +5,16 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.health.connect.datatypes.ExerciseRoute
+import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
@@ -43,7 +47,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
     private lateinit var  btnActivate: Button
 
-    private var IsRecording  =false
+    private var isRecording  =false
 
 
 
@@ -108,6 +112,19 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
 
 
+        btnActivate.setOnClickListener()
+        {
+            if (isRecording)
+            {
+
+            }
+            else
+            {
+
+            }
+
+        }
+
 
 
 
@@ -116,12 +133,13 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
     }
 
     private val locationListener = object : LocationListener {
+        @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
         override fun onLocationChanged(location: Location) {
             // Update GPS TextView with latitude, longitude, and speed
 
-            Latitute.text=location.latitude
-            Longitude.text=location.longitute
-            Speed.text=location.speed
+            Latitute.text= location.latitude.toString()
+            Longitude.text=location.longitude.toString()
+            Speed.text= location.speed.toString()
 
 
         }
@@ -131,13 +149,41 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         override fun onProviderDisabled(provider: String) {}
     }
 
+    override fun onSensorChanged(event: SensorEvent?) {
+        if (event != null) {
+            when (event.sensor.type) {
+                Sensor.TYPE_ACCELEROMETER -> {
+                    xAcceleration.text = event.values[0].toString()
+                    yAcceleration.text = event.values[1].toString()
+                    zAcceleration.text = event.values[2].toString()
+                }
+                Sensor.TYPE_ROTATION_VECTOR -> {
+                    val rotationMatrix = FloatArray(9)
+                    SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values)
+
+                    val orientationAngles = FloatArray(3)
+                    SensorManager.getOrientation(rotationMatrix, orientationAngles)
+
+                    xOrientation.text = Math.toDegrees(orientationAngles[0].toDouble()).toString()
+                    yOrientation.text = Math.toDegrees(orientationAngles[1].toDouble()).toString()
+                    zOrientation.text = Math.toDegrees(orientationAngles[2].toDouble()).toString()
+                }
+                Sensor.TYPE_GYROSCOPE -> {
+                    xAngularVelocity.text = event.values[0].toString()
+                    yAngularVelocity.text = event.values[1].toString()
+                    zAngularVelocity.text = event.values[2].toString()
+                }
+            }
+        }
+    }
+
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int)
     {
         TODO("Not yet implemented")
     }
     private fun StartMeasurement()
     {
-        IsRecording=true
+        isRecording=true
         btnActivate.text="Stop"
 
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL)
@@ -157,6 +203,13 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
     }
     private fun StopMeasurement()
     {
+
+        isRecording = false
+        btnActivate.text = "Start"
+
+
+        sensorManager.unregisterListener(this)
+        locationManager.removeUpdates(locationListener)
 
     }
 }
