@@ -116,11 +116,12 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         {
             if (isRecording)
             {
+                StopMeasurement()
 
             }
             else
             {
-
+                StartMeasurement()
             }
 
         }
