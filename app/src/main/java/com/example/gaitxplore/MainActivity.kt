@@ -136,7 +136,6 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
 
 
-
     }
 
     private val locationListener = object : LocationListener {
@@ -207,12 +206,11 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
             return
         }
 
-        // Check if the provider is enabled before requesting updates
+
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 0f, locationListener)
         } else {
-            // Handle case where GPS provider is not enabled
-            // For example, show a message to the user or navigate to settings to enable GPS
+            //Nothing do if the if GPS not being enabled
         }
     }
     private fun stopMeasurement()
@@ -238,7 +236,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
             }
         } else
         {
-            // Handle permission denied case
+            // Nothing to do if there permsion is not grantted
         }
 
     }
