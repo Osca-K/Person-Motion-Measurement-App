@@ -50,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="@string/z"
+        android:text="Z"
         app:layout_constraintBottom_toTopOf="@+id/tvZacceleration"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.768"
@@ -169,11 +169,11 @@
         android:id="@+id/tv_ori_z_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="8dp"
         android:text="θz"
         app:layout_constraintBottom_toTopOf="@+id/tvYorientation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.76"
+        app:layout_constraintHorizontal_bias="0.782"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -299,7 +299,6 @@
         app:layout_constraintTop_toBottomOf="@+id/tvYangularVelocity" />
 
 
-
     <TextView
         android:id="@+id/tv_ori_x_label4"
 
@@ -308,7 +307,7 @@
         android:layout_marginTop="24dp"
         android:text="Longitude"
         app:layout_constraintEnd_toStartOf="@+id/tvLongitude"
-        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintHorizontal_bias="0.289"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_gyroscope2" />
 
@@ -330,10 +329,10 @@
 
         android:layout_width="wrap_content"
         android:layout_height="31dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="20dp"
         android:text="@string/latitude"
         app:layout_constraintEnd_toStartOf="@+id/tvLatitude"
-        app:layout_constraintHorizontal_bias="0.455"
+        app:layout_constraintHorizontal_bias="0.276"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_ori_x_label4" />
 
@@ -355,10 +354,10 @@
 
         android:layout_width="wrap_content"
         android:layout_height="31dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="16dp"
         android:text="speed(m/s) "
         app:layout_constraintEnd_toStartOf="@+id/tvSpeed"
-        app:layout_constraintHorizontal_bias="0.305"
+        app:layout_constraintHorizontal_bias="0.26"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_ori_x_label5" />
 
@@ -418,20 +417,20 @@
         android:layout_marginTop="24dp"
         android:text="Sampling rate (Hz)"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.155"
+        app:layout_constraintHorizontal_bias="0.15"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_gyroscope3" />
 
     <EditText
         android:id="@+id/editTextNumber"
-        android:layout_width="94dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/rounded_background"
+        android:layout_width="52dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="4dp"
+
         android:ems="10"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.884"
+        app:layout_constraintHorizontal_bias="0.881"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_gyroscope3" />
 
