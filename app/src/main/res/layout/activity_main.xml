@@ -356,7 +356,7 @@
         android:layout_width="wrap_content"
         android:layout_height="31dp"
         android:layout_marginTop="28dp"
-        android:text="@string/speed"
+        android:text="speed(m/s) "
         app:layout_constraintEnd_toStartOf="@+id/tvSpeed"
         app:layout_constraintHorizontal_bias="0.305"
         app:layout_constraintStart_toStartOf="parent"
@@ -410,5 +410,23 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnRun" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sampling rate (Hz)"
+        tools:layout_editor_absoluteX="55dp"
+        tools:layout_editor_absoluteY="769dp" />
+
+    <EditText
+        android:id="@+id/editTextNumber"
+        android:layout_width="94dp"
+        android:layout_height="44dp"
+        android:ems="10"
+        android:background="@drawable/rounded_background"
+        android:inputType="number"
+        tools:layout_editor_absoluteX="258dp"
+        tools:layout_editor_absoluteY="750dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
