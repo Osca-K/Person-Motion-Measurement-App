@@ -298,6 +298,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvYangularVelocity" />
 
+
+
     <TextView
         android:id="@+id/tv_ori_x_label4"
 
@@ -384,7 +386,7 @@
         android:layout_marginTop="168dp"
         android:backgroundTint="@color/design_default_color_primary"
         android:padding="8dp"
-        android:text="Start"
+        android:text="Start Application Motion"
         android:textColor="@android:color/white"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -392,6 +394,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_gyroscope2" />
 
-  <!--End of all the controls and properties of the UI -->
+    <!--End of all the controls and properties of the UI -->
+
+<!--    LOGGING THE DATA OF MOTION -->
+
+    <TextView
+        android:id="@+id/tv_gyroscope3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="MOTION LOGGING "
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnRun" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
