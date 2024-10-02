@@ -329,10 +329,10 @@
 
         android:layout_width="wrap_content"
         android:layout_height="31dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="24dp"
         android:text="@string/latitude"
         app:layout_constraintEnd_toStartOf="@+id/tvLatitude"
-        app:layout_constraintHorizontal_bias="0.276"
+        app:layout_constraintHorizontal_bias="0.254"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_ori_x_label4" />
 
@@ -354,10 +354,10 @@
 
         android:layout_width="wrap_content"
         android:layout_height="31dp"
-        android:layout_marginTop="16dp"
-        android:text="speed(m/s) "
+        android:layout_marginTop="20dp"
+        android:text="Speed(m/s) "
         app:layout_constraintEnd_toStartOf="@+id/tvSpeed"
-        app:layout_constraintHorizontal_bias="0.26"
+        app:layout_constraintHorizontal_bias="0.205"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_ori_x_label5" />
 
