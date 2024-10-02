@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">GaitXplore</string>
     <string name="acceleration">ACCELERATION</string>
@@ -10,4 +11,14 @@
     <string name="x">X</string>
     <string name="y">Y</string>
     <string name="z">z</string>
+
+<!--    The special string for theta dot, double theta dot -->
+
+    <string name="theta_dot_x">θ̇x</string>
+    <string name="theta_dot_y">θ̇y</string>
+    <string name="theta_dot_z">θ̇z</string>
+    <string name="theta_double_dot_x">θ̈x</string>
+    <string name="theta_double_dot_y">θ̈y</string>
+    <string name="theta_double_dot_z">θ̈z</string>
+
 </resources>
