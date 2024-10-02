@@ -28,8 +28,8 @@
         android:id="@+id/tv_acc_x_label"
         android:layout_width="10dp"
         android:layout_height="22dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginStart="96dp"
+        android:layout_marginBottom="2dp"
         android:text="@string/x"
         app:layout_constraintBottom_toTopOf="@+id/tvXacceleration"
         app:layout_constraintStart_toStartOf="parent" />
@@ -38,25 +38,25 @@
         android:id="@+id/tv_acc_y_label"
         android:layout_width="10dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="2dp"
         android:text="@string/y"
         app:layout_constraintBottom_toTopOf="@+id/tvYacceleration"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <!-- Controls where the accerleraction I must update -->
     <TextView
         android:id="@+id/tv_acc_z_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="Z"
+        android:layout_marginBottom="2dp"
+        android:text="@string/z"
         app:layout_constraintBottom_toTopOf="@+id/tvZacceleration"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.768"
+        app:layout_constraintHorizontal_bias="0.786"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <!-- Controls where the accerleraction I must update -->
     <TextView
         android:id="@+id/tvXacceleration"
         android:layout_width="80dp"
@@ -145,21 +145,21 @@
 
     <TextView
         android:id="@+id/tv_ori_x_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:text="@string/theta_dot_x"
+        android:layout_width="15dp"
+        android:layout_height="25dp"
+        android:layout_marginBottom="2dp"
+        android:text="@string/theta_x"
         app:layout_constraintBottom_toTopOf="@+id/tvXorientation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.217"
+        app:layout_constraintHorizontal_bias="0.201"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tv_ori_y_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:text="θy"
+        android:layout_width="15dp"
+        android:layout_height="25dp"
+        android:layout_marginBottom="2dp"
+        android:text="@string/theta_y"
         app:layout_constraintBottom_toTopOf="@+id/tvZorientation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -167,10 +167,10 @@
 
     <TextView
         android:id="@+id/tv_ori_z_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="θz"
+        android:layout_width="15dp"
+        android:layout_height="25dp"
+        android:layout_marginBottom="2dp"
+        android:text="@string/theta_z"
         app:layout_constraintBottom_toTopOf="@+id/tvYorientation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.782"
@@ -213,12 +213,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="116dp"
-        android:text="@string/theta_double_dot_x"
+        android:text="θx"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.219"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvXorientation"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/tvXorientation" />
 
     <TextView
         android:id="@+id/tv_ori_y_label2"
