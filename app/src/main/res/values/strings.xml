@@ -20,6 +20,12 @@
     <string name="theta_y">θ<sub>y</sub></string>
     <string name="theta_z">θ<sub>z</sub></string>
 
+<!--    Dot (Theta(sub x, y, and z)-->
+
+    <string name="theta_dot_x">θ̇̇<sub>x</sub></string>
+    <string name="theta_dot_y">θ̇̇<sub>y</sub></string>
+    <string name="theta_dot_z">θ̇̇<sub>z</sub></string>
+
 <!--    The special string for theta dot, double theta dot -->
 
 <!--    <string name="theta_dot_x">θ̇x</string>-->
