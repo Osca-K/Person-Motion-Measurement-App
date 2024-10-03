@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
             insets
         }
 
-     // Trying to request permission ealry
+     // Trying to request permission ealry before trying to access the sensors (Was getting error before this..I should remember
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
             ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
@@ -159,9 +159,15 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
     }
 
     override fun onSensorChanged(event: SensorEvent?) {
-        if (event != null) {
-            when (event.sensor.type) {
-                Sensor.TYPE_ACCELEROMETER -> {
+        if (event != null)
+
+
+        {
+            when (event.sensor.type)
+
+            {
+                Sensor.TYPE_ACCELEROMETER ->
+                    {
                     xAcceleration.text = String.format("%.3f", event.values[0])
                     yAcceleration.text = String.format("%.3f", event.values[1])
                     zAcceleration.text = String.format("%.3f", event.values[2])
@@ -173,9 +179,21 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                     val orientationAngles = FloatArray(3)
                     SensorManager.getOrientation(rotationMatrix, orientationAngles)
 
-                    xOrientation.text = String.format("%.3f", Math.toDegrees(orientationAngles[0].toDouble()))
-                    yOrientation.text = String.format("%.3f", Math.toDegrees(orientationAngles[1].toDouble()))
-                    zOrientation.text = String.format("%.3f", Math.toDegrees(orientationAngles[2].toDouble()))
+
+                    val pitch = Math.toDegrees(orientationAngles[1].toDouble())
+                    val roll = Math.toDegrees(orientationAngles[2].toDouble())
+                    val yaw = Math.toDegrees(orientationAngles[0].toDouble())
+
+
+//                    xOrientation.text = String.format("%.3f", Math.toDegrees(orientationAngles[1].toDouble()))
+//                    yOrientation.text = String.format("%.3f", Math.toDegrees(orientationAngles[2].toDouble()))
+//                    zOrientation.text = String.format("%.3f", Math.toDegrees(orientationAngles[0].toDouble()))
+
+
+                    xOrientation.text = String.format("%.3f", pitch)
+                    yOrientation.text = String.format("%.3f", yaw)
+                    zOrientation.text = String.format("%.3f", roll)
+
                 }
                 Sensor.TYPE_GYROSCOPE -> {
                     xAngularVelocity.text = String.format("%.3f", event.values[0])
