@@ -185,18 +185,25 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                         yAccel=event.values[1].toDouble()
                         zAccel=event.values[2].toDouble()
 
-                        xPitch=Math.toDegrees(atan2(yAccel, sqrt(xAccel*xAccel+zAccel+zAccel)))
-                        yRoll=Math.toDegrees(atan2(-xAccel, sqrt(yAccel*yAccel+zAccel*zAccel)))
+//                        xPitch=Math.toDegrees(atan2(yAccel, sqrt(xAccel*xAccel+zAccel+zAccel)))
+//                        yRoll=Math.toDegrees(atan2(-xAccel, sqrt(yAccel*yAccel+zAccel*zAccel)))
+
+                       // Rotation about z axis)
+                        xPitch = Math.toDegrees(atan2(yAccel, sqrt(xAccel * xAccel + zAccel * zAccel)))
+
+                        // Calculating zYaw (Rotation around X-axis)
+                        zYaw = Math.toDegrees(atan2(xAccel, sqrt(yAccel * yAccel + zAccel * zAccel)))
 
 
-                     xOrientation.text = String.format("%.3f", xPitch)
-                     zOrientation.text = String.format("%.3f", yRoll)
+
+                         xOrientation.text = String.format("%.3f", xPitch)
+                         yOrientation.text = String.format("%.3f", zYaw)
 
 
 
-                    xAcceleration.text = String.format("%.3f", event.values[0])
-                    yAcceleration.text = String.format("%.3f", event.values[1])
-                    zAcceleration.text = String.format("%.3f", event.values[2])
+                        xAcceleration.text = String.format("%.3f", event.values[0])
+                        yAcceleration.text = String.format("%.3f", event.values[1])
+                        zAcceleration.text = String.format("%.3f", event.values[2])
                 }
                 Sensor.TYPE_ROTATION_VECTOR -> {
                     val rotationMatrix = FloatArray(9)
@@ -208,7 +215,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
 //                    xOrientation.text = String.format("%.3f", Math.toDegrees(orientationAngles[1].toDouble()))
 //                    yOrientation.text = String.format("%.3f", Math.toDegrees(orientationAngles[2].toDouble()))
-                    yOrientation.text = String.format("%.3f", Math.toDegrees(orientationAngles[0].toDouble()))
+                    zOrientation.text = String.format("%.3f", Math.toDegrees(orientationAngles[0].toDouble()))
 
 
 
