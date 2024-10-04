@@ -19,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import kotlin.math.atan2
+import kotlin.math.sqrt
 import kotlin.text.*
 
 
@@ -183,9 +185,12 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                         yAccel=event.values[1].toDouble()
                         zAccel=event.values[1].toDouble()
 
-                        xPitch=Math.toDegrees(Math.atan2(yAccel, Math.sqrt(xAccel*xAccel+zAccel+zAccel)))
-                        yRoll=Math.toDegrees(Math.atan2(-xAccel, Math.sqrt(yAccel*yAccel+zAccel*zAccel)))
-                        
+                        xPitch=Math.toDegrees(atan2(yAccel, sqrt(xAccel*xAccel+zAccel+zAccel)))
+                        yRoll=Math.toDegrees(atan2(-xAccel, sqrt(yAccel*yAccel+zAccel*zAccel)))
+
+
+                     xOrientation.text = String.format("%.3f", xPitch)
+                     yOrientation.text = String.format("%.3f", yRoll) 
 
 
 
@@ -201,8 +206,8 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                     SensorManager.getOrientation(rotationMatrix, orientationAngles)
 
 
-                    xOrientation.text = String.format("%.3f", Math.toDegrees(orientationAngles[1].toDouble()))
-                    yOrientation.text = String.format("%.3f", Math.toDegrees(orientationAngles[2].toDouble()))
+//                    xOrientation.text = String.format("%.3f", Math.toDegrees(orientationAngles[1].toDouble()))
+//                    yOrientation.text = String.format("%.3f", Math.toDegrees(orientationAngles[2].toDouble()))
                     zOrientation.text = String.format("%.3f", Math.toDegrees(orientationAngles[0].toDouble()))
 
 
