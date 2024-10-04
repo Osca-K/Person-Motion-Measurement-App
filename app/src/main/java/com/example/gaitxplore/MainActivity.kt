@@ -52,23 +52,6 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
 
 
-    // Variable for method 2 with improvement on the accurency and ensuring the calibration of the sensors are correct
-    private var filteredPitch: Float = 0f
-    private var filteredYaw: Float = 0f
-    private var filteredRoll: Float = 0f
-    private var lastTime: Long = 0
-    private val alpha: Float = 0.99f // Adjust this value for filtering (0.9 - 0.99 is common)
-
-
-
-//    private var acceleration = FloatArray(3)
-//    private var orientation = FloatArray(3)
-//    private var angularVelocity = FloatArray(3)
-//    private var latitude: Double = 0.0
-//    private var longitude: Double = 0.0
-//    private var speed: Float = 0f
-
-
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
@@ -187,7 +170,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
                     val orientationAngles = FloatArray(3)
                     SensorManager.getOrientation(rotationMatrix, orientationAngles)
-                    
+
 
                     xOrientation.text = String.format("%.3f", Math.toDegrees(orientationAngles[1].toDouble()))
                     yOrientation.text = String.format("%.3f", Math.toDegrees(orientationAngles[2].toDouble()))
