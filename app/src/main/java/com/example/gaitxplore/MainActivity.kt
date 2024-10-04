@@ -52,6 +52,15 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
 
 
+    // Variable for method 2 with improvement on the accurency and ensuring the calibration of the sensors are correct
+    private var filteredPitch: Float = 0f
+    private var filteredYaw: Float = 0f
+    private var filteredRoll: Float = 0f
+    private var lastTime: Long = 0
+    private val alpha: Float = 0.99f // Adjust this value for filtering (0.9 - 0.99 is common)
+
+
+
 //    private var acceleration = FloatArray(3)
 //    private var orientation = FloatArray(3)
 //    private var angularVelocity = FloatArray(3)
@@ -178,34 +187,14 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
                     val orientationAngles = FloatArray(3)
                     SensorManager.getOrientation(rotationMatrix, orientationAngles)
+                    
+
+                    xOrientation.text = String.format("%.3f", Math.toDegrees(orientationAngles[1].toDouble()))
+                    yOrientation.text = String.format("%.3f", Math.toDegrees(orientationAngles[2].toDouble()))
+                    zOrientation.text = String.format("%.3f", Math.toDegrees(orientationAngles[0].toDouble()))
 
 
-                    val yaw = Math.toDegrees(orientationAngles[0].toDouble())
-                    val pitch = Math.toDegrees(orientationAngles[1].toDouble())
-                    val roll = Math.toDegrees(orientationAngles[2].toDouble())
 
-
-//                    val adjustedPitch = pitch // You can further adjust this based on your specific upright angle
-//                    val adjustedYaw = (yaw + 360) % 360 // Normalize azimuth to 0-360
-//                    val adjustedRoll = roll // Roll should change as per the rotation around Y-axis
-//
-//                    // Normalize pitch and roll for consistent representation
-////                    val normalizedPitch = (adjustedPitch + 360) % 360
-//                    val normalizedYaw = (adjustedYaw + 360) % 360
-////                    val normalizedRoll = (adjustedRoll + 360) % 360
-//
-//                    val normalizedPitch = (adjustedPitch + 180) % 360 - 180  // Normalize to -180 to 180
-//                    val normalizedRoll = (adjustedRoll + 180) % 360 - 180  // Normalize to -180 to 180
-
-
-//                    xOrientation.text = String.format("%.3f", Math.toDegrees(orientationAngles[1].toDouble()))
-//                    yOrientation.text = String.format("%.3f", Math.toDegrees(orientationAngles[2].toDouble()))
-//                    zOrientation.text = String.format("%.3f", Math.toDegrees(orientationAngles[0].toDouble()))
-
-
-                    xOrientation.text = String.format("%.1f", pitch)
-                    yOrientation.text = String.format("%.1f", yaw)
-                    zOrientation.text = String.format("%.1f", roll)
 
                 }
                 Sensor.TYPE_GYROSCOPE -> {
@@ -215,6 +204,8 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                 }
             }
         }
+
+
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int)
