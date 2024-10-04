@@ -185,20 +185,20 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                         yAccel=event.values[1].toDouble()
                         zAccel=event.values[2].toDouble()
 
-//                        xPitch=Math.toDegrees(atan2(yAccel, sqrt(xAccel*xAccel+zAccel+zAccel)))
-//                        yRoll=Math.toDegrees(atan2(-xAccel, sqrt(yAccel*yAccel+zAccel*zAccel)))
-
-                       // Rotation about z axis)
-                        xPitch = Math.toDegrees(atan2(yAccel, sqrt(xAccel * xAccel + zAccel * zAccel)))
-
-                        // Calculating zYaw (Rotation around X-axis)
-                        zYaw = Math.toDegrees(atan2(xAccel, sqrt(yAccel * yAccel + zAccel * zAccel)))
 
 
 
+                        // Calculating  (Rotation around z-axis)
+                         xPitch = Math.toDegrees(atan2(xAccel, sqrt(yAccel * yAccel + zAccel * zAccel)))
 
-                         xOrientation.text = String.format("%.3f", zYaw)
-                        yOrientation.text = String.format("%.3f", xPitch)
+                        // Rotation about x axis)
+                        zYaw = Math.toDegrees(atan2(zAccel, sqrt(xAccel * xAccel + yAccel * yAccel)))
+
+
+
+
+                        xOrientation.text = String.format("%.3f", xPitch)
+                        yOrientation.text = String.format("%.3f", zYaw)
 
 
 
