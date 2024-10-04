@@ -24,6 +24,8 @@ import kotlin.text.*
 
 class MainActivity : AppCompatActivity() , SensorEventListener{
 
+
+
     private lateinit var  sensorManager: SensorManager
     private lateinit var  locationManager: LocationManager
 
@@ -49,6 +51,23 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
     private lateinit var  btnActivate: Button
 
     private var isRecording  =false
+
+    //Need Global variable to store Reading to easly transfer to DataBase
+
+    private var xAccel:Double = 0.0
+    private var yAccel:Double = 0.0
+    private var zAccel:Double = 0.0
+
+
+    private var xPitch:Double = 0.0
+    private var yRoll:Double = 0.0
+    private var zYaw:Double = 0.0
+
+    private var xAngVel:Double = 0.0
+    private var yAngVel:Double = 0.0
+    private var zAngVel:Double = 0.0
+
+
 
 
 
@@ -98,7 +117,6 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
       Latitute=findViewById(R.id.tvLatitude)
       Longitude=findViewById(R.id.tvLongitude)
       Speed=findViewById(R.id.tvSpeed)
-
         // Button
 
         btnActivate=findViewById(R.id.btnRun)
@@ -160,6 +178,17 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
             {
                 Sensor.TYPE_ACCELEROMETER ->
                     {
+
+                        xAccel=event.values[0].toDouble()
+                        yAccel=event.values[1].toDouble()
+                        zAccel=event.values[1].toDouble()
+
+                        xPitch=Math.toDegrees(Math.atan2(yAccel, Math.sqrt(xAccel*xAccel+zAccel+zAccel)))
+                        yRoll=Math.toDegrees(Math.atan2(-xAccel, Math.sqrt(yAccel*yAccel+zAccel*zAccel)))
+                        
+
+
+
                     xAcceleration.text = String.format("%.3f", event.values[0])
                     yAcceleration.text = String.format("%.3f", event.values[1])
                     zAcceleration.text = String.format("%.3f", event.values[2])
