@@ -196,8 +196,9 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
 
 
-                         xOrientation.text = String.format("%.3f", xPitch)
-                         yOrientation.text = String.format("%.3f", zYaw)
+
+                         xOrientation.text = String.format("%.3f", zYaw)
+                        yOrientation.text = String.format("%.3f", xPitch)
 
 
 
