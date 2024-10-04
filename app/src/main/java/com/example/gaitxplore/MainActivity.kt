@@ -190,7 +190,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
 
                      xOrientation.text = String.format("%.3f", xPitch)
-                     yOrientation.text = String.format("%.3f", yRoll)
+                     zOrientation.text = String.format("%.3f", yRoll)
 
 
 
@@ -208,7 +208,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
 //                    xOrientation.text = String.format("%.3f", Math.toDegrees(orientationAngles[1].toDouble()))
 //                    yOrientation.text = String.format("%.3f", Math.toDegrees(orientationAngles[2].toDouble()))
-                    zOrientation.text = String.format("%.3f", Math.toDegrees(orientationAngles[0].toDouble()))
+                    yOrientation.text = String.format("%.3f", Math.toDegrees(orientationAngles[0].toDouble()))
 
 
 
