@@ -20,6 +20,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.sin
 import kotlin.math.sqrt
 import kotlin.text.*
 
@@ -68,6 +70,9 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
     private var xAngVel:Double = 0.0
     private var yAngVel:Double = 0.0
     private var zAngVel:Double = 0.0
+
+
+    private var filteredYAngle = 0.0f // Initialize the filtered angle
 
 
 
@@ -170,7 +175,6 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         if (event != null)
 
 
-        {
             when (event.sensor.type)
 
             {
@@ -190,11 +194,17 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                         // Rotation about x axis)
                         zYaw = Math.toDegrees(atan2(zAccel, sqrt(xAccel * xAccel + yAccel * yAccel)))
 
+                        yRoll = Math.toDegrees(atan2(sin(Math.toRadians(yRoll)) * cos(Math.toRadians(xPitch)), cos(Math.toRadians(yRoll))))
+
+
+
 
 
 
                         xOrientation.text = String.format("%.3f", xPitch)
                         yOrientation.text = String.format("%.3f", zYaw)
+                        zOrientation.text = String.format("%.3f", yRoll)
+
 
 
 
@@ -202,7 +212,9 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                         yAcceleration.text = String.format("%.3f", event.values[1])
                         zAcceleration.text = String.format("%.3f", event.values[2])
                 }
-                Sensor.TYPE_ROTATION_VECTOR -> {
+                Sensor.TYPE_ROTATION_VECTOR ->
+
+                 {
                     val rotationMatrix = FloatArray(9)
                     SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values)
 
@@ -210,14 +222,18 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                     SensorManager.getOrientation(rotationMatrix, orientationAngles)
 
 
+
 //                    xOrientation.text = String.format("%.3f", Math.toDegrees(orientationAngles[1].toDouble()))
 //                    yOrientation.text = String.format("%.3f", Math.toDegrees(orientationAngles[2].toDouble()))
-                    zOrientation.text = String.format("%.3f", Math.toDegrees(orientationAngles[0].toDouble()))
+//                    zOrientation.text = String.format("%.1f", Math.toDegrees(orientationAngles[0].toDouble())+154.00)
+
+                  //  zOrientation.text = String.format("%.1f",normalizedYAngle+154.00)
 
 
 
 
                 }
+
                 Sensor.TYPE_GYROSCOPE -> {
                     xAngularVelocity.text = String.format("%.3f", event.values[0])
                     yAngularVelocity.text = String.format("%.3f", event.values[1])
@@ -225,9 +241,6 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                 }
             }
         }
-
-
-    }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int)
     {
