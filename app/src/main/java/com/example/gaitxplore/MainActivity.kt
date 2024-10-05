@@ -71,6 +71,15 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
     private var yAngVel:Double = 0.0
     private var zAngVel:Double = 0.0
 
+    private var gpsLatitude :Double=0.0
+    private  var gpsLongitude:Double =0.0
+    private var gpsSpeed:Double=0.0
+
+    private var SampleRate :Int=0;
+
+
+    //Think I might need Array to store all the values at once to be parallel to each other for Dabase Srorage
+
 
 
 
@@ -138,7 +147,6 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
             if (isRecording)
             {
                 stopMeasurement()
-
             }
             else
             {
@@ -182,21 +190,19 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                         xAccel=event.values[0].toDouble()
                         yAccel=event.values[1].toDouble()
                         zAccel=event.values[2].toDouble()
-
-
+                        
 
                         zRot = Math.toDegrees(atan2(xAccel, sqrt(yAccel * yAccel + zAccel * zAccel)))
 
-                        // Rotation about x axis)
                         xRot = Math.toDegrees(atan2(zAccel, sqrt(xAccel * xAccel + yAccel * yAccel)))
 
                         xOrientation.text = String.format("%.3f", zRot)
                         yOrientation.text = String.format("%.3f", xRot)
 
 
-                        xAcceleration.text = String.format("%.3f", event.values[0])
-                        yAcceleration.text = String.format("%.3f", event.values[1])
-                        zAcceleration.text = String.format("%.3f", event.values[2])
+                        xAcceleration.text = String.format("%.3f",xAccel)
+                        yAcceleration.text = String.format("%.3f",yAccel)
+                        zAcceleration.text = String.format("%.3f",zAccel)
                 }
                 Sensor.TYPE_ROTATION_VECTOR ->
 
