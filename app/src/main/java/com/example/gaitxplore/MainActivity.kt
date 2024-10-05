@@ -130,8 +130,6 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
 
 
-
-
         btnActivate.setOnClickListener()
         {
             if (isRecording)
@@ -145,8 +143,6 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
             }
 
         }
-
-
 
     }
 
