@@ -72,16 +72,6 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
     private var zAngVel:Double = 0.0
 
 
-// To be removed
-
-    private var filteredYAngle = 0.0
-    private var filteredZAngle = 0.0
-    private val alpha = 0.8 // Adjust based on motion dynamics
-
-    // Assuming you have angular velocity from gyroscope
-    private var lastTimestamp: Long = 0
-    private var gyroZ: Float = 0.0f
-
 
 
 
@@ -217,17 +207,20 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                     val orientationAngles = FloatArray(3)
                     SensorManager.getOrientation(rotationMatrix, orientationAngles)
 
+                     yRot=Math.toDegrees(orientationAngles[0].toDouble())+154.00
 
-                     zOrientation.text = String.format("%.3f", Math.toDegrees(orientationAngles[0].toDouble())+154.00)
+                     zOrientation.text = String.format("%.3f", yRot)
 
                 }
 
                 Sensor.TYPE_GYROSCOPE -> {
-                    xAngularVelocity.text = String.format("%.3f", event.values[0])
-                    yAngularVelocity.text = String.format("%.3f", event.values[1])
-                    zAngularVelocity.text = String.format("%.3f", event.values[2])
+                    xAngVel=event.values[0].toDouble();
+                    yAngVel=event.values[1].toDouble();
+                    zAngVel=event.values[2].toDouble();
 
-                    gyroZ = event.values[1]
+                    xAngularVelocity.text = String.format("%.3f", xAngVel)
+                    yAngularVelocity.text = String.format("%.3f",yAngVel)
+                    zAngularVelocity.text = String.format("%.3f",zAngVel)
                 }
             }
         }
