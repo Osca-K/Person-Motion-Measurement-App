@@ -190,7 +190,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                         xAccel=event.values[0].toDouble()
                         yAccel=event.values[1].toDouble()
                         zAccel=event.values[2].toDouble()
-                        
+
 
                         zRot = Math.toDegrees(atan2(xAccel, sqrt(yAccel * yAccel + zAccel * zAccel)))
 

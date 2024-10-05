@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "299244040005",
+    "project_id": "gaitxplore",
+    "storage_bucket": "gaitxplore.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:299244040005:android:f9478eed85e1ef53ced82c",
+        "android_client_info": {
+          "package_name": "com.example.gaitxplore"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDddWSsNXKjnGtpCZxCZrci9hSl5IZdKvA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
