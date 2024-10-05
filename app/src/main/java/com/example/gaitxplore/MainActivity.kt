@@ -207,7 +207,13 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                     val orientationAngles = FloatArray(3)
                     SensorManager.getOrientation(rotationMatrix, orientationAngles)
 
-                     yRot=Math.toDegrees(orientationAngles[0].toDouble())+154.00
+                     yRot=Math.toDegrees(orientationAngles[0].toDouble())
+
+                     if (yRot > 180) {
+                         yRot -= 360
+                     } else if (yRot < -180) {
+                         yRot += 360
+                     }
 
                      zOrientation.text = String.format("%.3f", yRot)
 
