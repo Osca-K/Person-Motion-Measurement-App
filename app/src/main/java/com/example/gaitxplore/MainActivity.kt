@@ -63,16 +63,24 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
     private var zAccel:Double = 0.0
 
 
-    private var xPitch:Double = 0.0
-    private var yRoll:Double = 0.0
-    private var zYaw:Double = 0.0
+    private var zRot:Double = 0.0
+    private var yRot:Double = 0.0
+    private var xRot:Double = 0.0
 
     private var xAngVel:Double = 0.0
     private var yAngVel:Double = 0.0
     private var zAngVel:Double = 0.0
 
 
-    private var filteredYAngle = 0.0f // Initialize the filtered angle
+// To be removed
+
+    private var filteredYAngle = 0.0
+    private var filteredZAngle = 0.0
+    private val alpha = 0.8 // Adjust based on motion dynamics
+
+    // Assuming you have angular velocity from gyroscope
+    private var lastTimestamp: Long = 0
+    private var gyroZ: Float = 0.0f
 
 
 
@@ -187,25 +195,13 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
 
 
-
-                        // Calculating  (Rotation around z-axis)
-                         xPitch = Math.toDegrees(atan2(xAccel, sqrt(yAccel * yAccel + zAccel * zAccel)))
+                        zRot = Math.toDegrees(atan2(xAccel, sqrt(yAccel * yAccel + zAccel * zAccel)))
 
                         // Rotation about x axis)
-                        zYaw = Math.toDegrees(atan2(zAccel, sqrt(xAccel * xAccel + yAccel * yAccel)))
+                        xRot = Math.toDegrees(atan2(zAccel, sqrt(xAccel * xAccel + yAccel * yAccel)))
 
-                        yRoll = Math.toDegrees(atan2(sin(Math.toRadians(yRoll)) * cos(Math.toRadians(xPitch)), cos(Math.toRadians(yRoll))))
-
-
-
-
-
-
-                        xOrientation.text = String.format("%.3f", xPitch)
-                        yOrientation.text = String.format("%.3f", zYaw)
-                        zOrientation.text = String.format("%.3f", yRoll)
-
-
+                        xOrientation.text = String.format("%.3f", zRot)
+                        yOrientation.text = String.format("%.3f", xRot)
 
 
                         xAcceleration.text = String.format("%.3f", event.values[0])
@@ -222,15 +218,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                     SensorManager.getOrientation(rotationMatrix, orientationAngles)
 
 
-
-//                    xOrientation.text = String.format("%.3f", Math.toDegrees(orientationAngles[1].toDouble()))
-//                    yOrientation.text = String.format("%.3f", Math.toDegrees(orientationAngles[2].toDouble()))
-//                    zOrientation.text = String.format("%.1f", Math.toDegrees(orientationAngles[0].toDouble())+154.00)
-
-                  //  zOrientation.text = String.format("%.1f",normalizedYAngle+154.00)
-
-
-
+                     zOrientation.text = String.format("%.3f", Math.toDegrees(orientationAngles[0].toDouble())+154.00)
 
                 }
 
@@ -238,6 +226,8 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                     xAngularVelocity.text = String.format("%.3f", event.values[0])
                     yAngularVelocity.text = String.format("%.3f", event.values[1])
                     zAngularVelocity.text = String.format("%.3f", event.values[2])
+
+                    gyroZ = event.values[1]
                 }
             }
         }
