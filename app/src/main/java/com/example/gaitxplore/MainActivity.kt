@@ -19,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.Firebase
+import com.google.firebase.database.database
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin
@@ -154,6 +156,15 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
             }
 
         }
+
+
+        //DataBase Code Here
+
+        // Write a message to the database--Testing
+        val database = Firebase.database
+        val myRef = database.getReference("message")
+
+        myRef.setValue("Testing DataBase!")
 
     }
 
