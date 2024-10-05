@@ -207,7 +207,9 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                     val orientationAngles = FloatArray(3)
                     SensorManager.getOrientation(rotationMatrix, orientationAngles)
 
-                     yRot=Math.toDegrees(orientationAngles[0].toDouble())
+                     yRot=Math.toDegrees(orientationAngles[0].toDouble())+140
+
+                     //+140 is for zeroing the system to be zero when its standing vertically as compared to the internal sensor system which is 0
 
                      if (yRot > 180) {
                          yRot -= 360
