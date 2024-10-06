@@ -12,6 +12,7 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
@@ -19,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.Firebase
 import com.google.firebase.database.database
 import kotlin.math.atan2
@@ -53,6 +55,8 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
     private lateinit var  Longitude : TextView
     private lateinit var  Speed : TextView
 
+    private lateinit var SampleRate :TextInputEditText
+
 
     private lateinit var  btnActivate: Button
     private lateinit var  btnLogMotion:Button
@@ -79,7 +83,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
     private  var gpsLongitude:Double =0.0
     private var gpsSpeed:Double=0.0
 
-    private var SampleRate :Int=0;
+
 
 
     //Think I might need Array to store all the values at once to be parallel to each other for Dabase Srorage
@@ -137,13 +141,13 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
       Speed=findViewById(R.id.tvSpeed)
         // Button
 
-          btnActivate=findViewById(R.id.btnRun)
-          btnLogMotion=findViewById(R.id.btnLogMotion)
-          SampleRate=findViewById<>(R.id.etnSampleRate)
+
+        btnActivate=findViewById(R.id.btnRun)
+        btnLogMotion=findViewById(R.id.btnLogMotion)
+        SampleRate = findViewById(R.id.etnSampleRate)
 
 
-
-    // Sensors and locations managers
+        // Sensors and locations managers
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
         locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
 
