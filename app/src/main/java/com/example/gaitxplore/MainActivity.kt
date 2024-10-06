@@ -55,6 +55,8 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
 
     private lateinit var  btnActivate: Button
+    private lateinit var  btnLogMotion:Button
+
 
     private var isRecording  =false
 
@@ -135,7 +137,9 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
       Speed=findViewById(R.id.tvSpeed)
         // Button
 
-        btnActivate=findViewById(R.id.btnRun)
+          btnActivate=findViewById(R.id.btnRun)
+          btnLogMotion=findViewById(R.id.btnLogMotion)
+          SampleRate=findViewById<>(R.id.etnSampleRate)
 
 
 
@@ -154,6 +158,10 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
             {
                 startMeasurement()
             }
+
+        }
+        btnLogMotion.setOnClickListener(){
+
 
         }
 
@@ -224,7 +232,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                     val orientationAngles = FloatArray(3)
                     SensorManager.getOrientation(rotationMatrix, orientationAngles)
 
-                     yRot=Math.toDegrees(orientationAngles[0].toDouble())+140
+                     yRot=Math.toDegrees(orientationAngles[0].toDouble())+140.0
 
                      //+140 is for zeroing the system to be zero when its standing vertically as compared to the internal sensor system which is 0
 
