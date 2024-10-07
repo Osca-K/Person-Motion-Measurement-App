@@ -21,6 +21,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.Firebase
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.database
 import kotlin.math.atan2
 import kotlin.math.sqrt
@@ -82,8 +83,10 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
 
 
+    //Firebase Ref
 
-    //Think I might need Array to store all the values at once to be parallel to each other for Dabase Srorage
+   private val firebaseDatabase = FirebaseDatabase.getInstance()
+   private val sensorDataRef = firebaseDatabase.getReference("SensorData")
 
 
 
@@ -168,6 +171,8 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
 
         //DataBase Code Here
+
+
 
         // Write a message to the database--Testing
         val database = Firebase.database
