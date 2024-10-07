@@ -11,7 +11,6 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -21,12 +20,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.Firebase
 import com.google.firebase.database.database
 import kotlin.math.atan2
-import kotlin.math.cos
-import kotlin.math.sin
 import kotlin.math.sqrt
 import kotlin.text.*
 
@@ -52,11 +48,11 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
     private lateinit var  zAngularVelocity : TextView
 
 
-    private lateinit var  Latitute : TextView
-    private lateinit var  Longitude : TextView
-    private lateinit var  Speed : TextView
+    private lateinit var  latitude : TextView
+    private lateinit var  longitude : TextView
+    private lateinit var  speed : TextView
 
-    private lateinit var SampleRate :EditText
+    private lateinit var sampleRate :EditText
 
 
     private lateinit var  btnActivate: Button
@@ -137,15 +133,15 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
     // GPS FOR POSTION AND SPEED
 
-      Latitute=findViewById(R.id.tvLatitude)
-      Longitude=findViewById(R.id.tvLongitude)
-      Speed=findViewById(R.id.tvSpeed)
+      latitude=findViewById(R.id.tvLatitude)
+      longitude=findViewById(R.id.tvLongitude)
+      speed=findViewById(R.id.tvSpeed)
         // Button
 
 
         btnActivate=findViewById(R.id.btnRun)
         btnLogMotion=findViewById(R.id.btnLogMotion)
-        SampleRate = findViewById(R.id.etnSampleRate)
+        sampleRate = findViewById(R.id.etnSampleRate)
 
 
         // Sensors and locations managers
@@ -188,9 +184,9 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
 
 
-            Latitute.text = String.format("%.3f", location.latitude)
-            Longitude.text = String.format("%.3f", location.longitude)
-            Speed.text = String.format("%.3f", location.speed)
+            latitude.text = String.format("%.3f", location.latitude)
+            longitude.text = String.format("%.3f", location.longitude)
+            speed.text = String.format("%.3f", location.speed)
 
 
         }
