@@ -432,6 +432,7 @@
 
         android:ems="10"
         android:inputType="text"
+        android:text="0.0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.881"
         app:layout_constraintStart_toStartOf="parent"
