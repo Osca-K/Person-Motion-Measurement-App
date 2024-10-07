@@ -252,9 +252,9 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                 }
 
                 Sensor.TYPE_GYROSCOPE -> {
-                    xAngVel=event.values[0].toDouble();
-                    yAngVel=event.values[1].toDouble();
-                    zAngVel=event.values[2].toDouble();
+                    xAngVel=event.values[0].toDouble()
+                    yAngVel=event.values[1].toDouble()
+                    zAngVel=event.values[2].toDouble()
 
                     xAngularVelocity.text = String.format("%.3f", xAngVel)
                     yAngularVelocity.text = String.format("%.3f",yAngVel)
