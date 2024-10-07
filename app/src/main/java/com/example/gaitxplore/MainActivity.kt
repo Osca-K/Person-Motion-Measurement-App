@@ -189,9 +189,15 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
 
 
-            latitude.text = String.format("%.3f", location.latitude)
-            longitude.text = String.format("%.3f", location.longitude)
-            speed.text = String.format("%.3f", location.speed)
+            gpsLatitude = location.latitude
+            gpsLongitude = location.longitude
+            gpsSpeed = location.speed.toDouble()
+
+
+
+            latitude.text = String.format("%.3f", gpsLatitude)
+            longitude.text = String.format("%.3f", gpsLongitude)
+            speed.text = String.format("%.3f", gpsSpeed)
 
 
         }
