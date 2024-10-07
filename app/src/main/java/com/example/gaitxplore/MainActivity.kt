@@ -24,6 +24,11 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.Firebase
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.database
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlin.math.atan2
 import kotlin.math.sqrt
 import kotlin.text.*
@@ -63,6 +68,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
     private var isRecording  =false
     private var isLogginData =false
+    private var recordingJob: Job? = null
 
     //Need Global variable to store Reading to easly transfer to DataBase
 
@@ -168,6 +174,13 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         }
         btnLogMotion.setOnClickListener()
         {
+
+
+            //First I need to check if the sample rate is greater than zero or I should set default value of sample-rate
+
+
+
+
             isLogginData=true
             Toast.makeText(this, "Motion is being logged", Toast.LENGTH_SHORT).show()
 
@@ -179,10 +192,10 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
 
         // Write a message to the database--Testing
-        val database = Firebase.database
-        val myRef = database.getReference("message")
-
-        myRef.setValue("Testing DataBase!")
+//        val database = Firebase.database
+//        val myRef = database.getReference("message")
+//
+//        myRef.setValue("Testing DataBase!")
 
     }
 
@@ -260,6 +273,11 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
                      zOrientation.text = String.format("%.3f", yRot)
 
+                     val database = Firebase.database
+                     val myRef = database.getReference("message")
+
+                     myRef.setValue(zOrientation.text)
+
                 }
 
                 Sensor.TYPE_GYROSCOPE -> {
@@ -283,6 +301,8 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         isRecording = true
         btnActivate.text = "Stop Motion Sensing"
 
+        val sampleRateMs = sampleRate.text.toString().toIntOrNull() ?: 1000 // Default to 1 second
+
 
 
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME)
@@ -302,6 +322,29 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         } else {
             //Nothing do if the if GPS not being enabled
         }
+
+
+
+
+//        val database = Firebase.database
+//        val sensorDataRef = database.getReference("SensorData")
+//
+//// Coroutine to log sensor data
+//        recordingJob = CoroutineScope(Dispatchers.IO).launch {
+//            while (isRecording) {
+//                // Create a SensorData object with the current sensor readings
+//                val sensorData = SensorData(
+//                    xAccel, yAccel, zAccel, xRot, yRot, zRot,
+//                    xAngVel, yAngVel, zAngVel, gpsLatitude, gpsLongitude, gpsSpeed
+//                )
+//
+//                // Push sensor data to Firebase
+//                sensorDataRef.setValue("sensorData")
+//
+//                // Delay based on the sample rate (in milliseconds)
+//                delay(sampleRateMs.toLong())
+//            }
+//        }
     }
     private fun stopMeasurement()
     {
@@ -313,7 +356,16 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         sensorManager.unregisterListener(this)
         locationManager.removeUpdates(locationListener)
 
+
+        // Stop Coroutine
+        recordingJob?.cancel()
+
     }
+    override fun onDestroy() {
+        super.onDestroy()
+        stopMeasurement()
+    }
+
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == 1 && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
