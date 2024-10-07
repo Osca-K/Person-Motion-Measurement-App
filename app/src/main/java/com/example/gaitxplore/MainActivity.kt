@@ -14,6 +14,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -165,8 +166,10 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
             }
 
         }
-        btnLogMotion.setOnClickListener(){
-
+        btnLogMotion.setOnClickListener()
+        {
+            isLogginData=true
+            Toast.makeText(this, "Motion is being logged", Toast.LENGTH_SHORT).show()
 
         }
 
