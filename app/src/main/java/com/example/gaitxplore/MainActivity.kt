@@ -61,6 +61,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
 
     private var isRecording  =false
+    private var isLogginData =false
 
     //Need Global variable to store Reading to easly transfer to DataBase
 
@@ -277,7 +278,9 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
     private fun startMeasurement()
     {
         isRecording = true
-        btnActivate.text = "Stop"
+        btnActivate.text = "Stop Motion Sensing"
+
+
 
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME)
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR), SensorManager.SENSOR_DELAY_FASTEST)
@@ -301,7 +304,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
     {
 
         isRecording = false
-        "Start".also { btnActivate.text = it }
+        "Start Motion Sensing".also { btnActivate.text = it }
 
 
         sensorManager.unregisterListener(this)
