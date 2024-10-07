@@ -30,6 +30,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.math.atan2
+import kotlin.math.roundToInt
 import kotlin.math.sqrt
 import kotlin.text.*
 
@@ -195,7 +196,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 //        val database = Firebase.database
 //        val myRef = database.getReference("message")
 //
-//        myRef.setValue("Testing DataBase!")
+//        myRef.setValue(zOrientation.text)
 
     }
 
@@ -271,12 +272,30 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                          yRot += 360
                      }
 
-                     zOrientation.text = String.format("%.3f", yRot)
 
                      val database = Firebase.database
-                     val myRef = database.getReference("message")
+                    val myRef = database.getReference("message")
 
-                     myRef.setValue(zOrientation.text)
+
+                     val realTimeDataString = """
+        xAccel: ${xAccel.roundToInt()}, yAccel: ${yAccel.roundToInt()}, zAccel: ${zAccel.roundToInt()},
+        xRot: ${xRot.roundToInt()}, yRot: ${yRot.roundToInt()}, zRot: ${zRot.roundToInt()},
+        xAngVel: ${xAngVel.roundToInt()}, yAngVel: ${yAngVel.roundToInt()}, zAngVel: ${zAngVel.roundToInt()},
+        latitude: $latitude, longitude: $longitude, speed: $speed
+    """.trimIndent()
+
+                    myRef.setValue(realTimeDataString)
+
+
+                     zOrientation.text = String.format("%.3f", yRot)
+
+
+
+                     logRealTimeData(xAccel,yAccel,zAccel,xRot,yRot,zRot, xAngVel, yAngVel,zAngVel, gpsLatitude,gpsLongitude, gpsSpeed)
+
+
+
+
 
                 }
 
@@ -289,7 +308,17 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                     yAngularVelocity.text = String.format("%.3f",yAngVel)
                     zAngularVelocity.text = String.format("%.3f",zAngVel)
                 }
+
+
+
+
             }
+
+
+
+
+//        myRef.setValue("X $xAccel m/s  Y $yAccel m/s ")
+
         }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int)
@@ -324,10 +353,40 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         }
 
 
+        // Write a message to the database--Testing
+
+
+
+
+
+        // logDataToDataBase(xAccel,yAccel,zAccel,xRot,yRot,zRot, xAngVel, yAngVel,zAngVel, gpsLatitude,gpsLongitude, gpsSpeed)
+       // logRealTimeData(xAccel,yAccel,zAccel,xRot,yRot,zRot, xAngVel, yAngVel,zAngVel, gpsLatitude,gpsLongitude, gpsSpeed)
+
+//        val database = Firebase.database
+//        val myRef = database.getReference("SensorReadings")
+
+// Coroutine to log sensor data at the sample rate
+//        recordingJob = CoroutineScope(Dispatchers.IO).launch {
+//            while (isRecording) {
+//                // Create a SensorData object with the current sensor readings
+//                val sensorData = SensorData(
+//                    xAccel, yAccel, zAccel, xRot, yRot, zRot,
+//                    xAngVel, yAngVel, zAngVel, gpsLatitude, gpsLongitude, gpsSpeed
+//                )
+//
+//                // Store sensor data in Firebase
+//                myRef.push().setValue(sensorData)
+//
+//                // Delay based on the sample rate (in milliseconds)
+//                delay(sampleRateMs.toLong())
+//            }
+//        }
+
+
 
 
 //        val database = Firebase.database
-//        val sensorDataRef = database.getReference("SensorData")
+//        val sensorDataRef = database.getReference("Motion Reading")
 //
 //// Coroutine to log sensor data
 //        recordingJob = CoroutineScope(Dispatchers.IO).launch {
@@ -382,4 +441,78 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         }
 
     }
+    private fun logDataToDataBase(xAccel: Double, yAccel: Double, zAccel: Double, xRot:Double, yRot:Double,zRot :Double, xAngVel: Double, yAngVel:Double, zAngVel:Double, lat:Double,lon:Double, speed:Double  )
+
+    {
+
+
+        val database = Firebase.database
+        val myRef = database.getReference("SensorData") // Reference for all sensor data
+
+        // Create a data structure (map) to hold the sensor values for a sample
+        val sensorDataMap = mapOf(
+            "xAccel" to xAccel,
+            "yAccel" to yAccel,
+            "zAccel" to zAccel,
+            "xRot" to xRot,
+            "yRot" to yRot,
+            "zRot" to zRot,
+            "xAngVel" to xAngVel,
+            "yAngVel" to yAngVel,
+            "zAngVel" to zAngVel,
+            "latitude" to lat,
+            "longitude" to lon,
+            "speed" to speed,
+//            "timestamp" to System.currentTimeMillis() // Record timestamp
+        )
+
+        // Push the sensor data (creates a new entry in the database with a unique key)
+        myRef.push().setValue(sensorDataMap)
+
+//        val database = Firebase.database
+//        val myRef = database.getReference("SensorData1")
+//
+//        // Create a map for storing the sensor data
+//        val sensorDataMap = mapOf(
+//            "xAccel" to xAccel,
+//            "yAccel" to yAccel,
+//            "zAccel" to zAccel,
+//            "xRot" to xRot,
+//            "yRot" to yRot,
+//            "zRot" to zRot,
+//            "xAngVel" to xAngVel,
+//            "yAngVel" to yAngVel,
+//            "zAngVel" to zAngVel,
+//            "latitude" to lat,
+//            "longitude" to lon,
+//            "speed" to speed,
+//            "timestamp" to System.currentTimeMillis() // Save the current timestamp
+//        )
+//
+//        // Push the sensor data to the Firebase database
+//        myRef.push().setValue(sensorDataMap)
+
+    }
+
+    private fun logRealTimeData(xAccel: Double, yAccel: Double, zAccel: Double,
+                                xRot: Double, yRot: Double, zRot: Double,
+                                xAngVel: Double, yAngVel: Double, zAngVel: Double,
+                                lat: Double, lon: Double, speed: Double) {
+
+        // Initialize Firebase database
+        val database = Firebase.database
+        val myRef = database.getReference("RealTimeSensorData") // Reference for real-time sensor data
+
+        // Create a string representation of the sensor values
+        val realTimeDataString = """
+        xAccel: $xAccel, yAccel: $yAccel, zAccel: $zAccel,
+        xRot: $xRot, yRot: $yRot, zRot: $zRot,
+        xAngVel: $xAngVel, yAngVel: $yAngVel, zAngVel: $zAngVel,
+        latitude: $lat, longitude: $lon, speed: $speed
+    """.trimIndent()
+
+        // Set the real-time string value in Firebase
+       myRef.setValue("realTimeDataString")
+    }
+
 }
