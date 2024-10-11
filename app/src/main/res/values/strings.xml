@@ -16,27 +16,15 @@
 
 
 <!--    Orientation Theta Sub x,y, and Z-->
-    <string name="theta_x">θ<sub>x</sub></string>
-    <string name="theta_y">θ<sub>y</sub></string>
-    <string name="theta_z">θ<sub>z</sub></string>
 
-    <string name="xPitch">PITCH<sub>(x)</sub></string>
-    <string name="yRoll">ROLL<sub>(y)</sub></string>
-    <string name="zAzimuth">AZIMUTH<sub>(z)</sub></string>
+    <string name="xPitch">PITCH [x]</string>
+    <string name="yRoll">ROLL [y]</string>
+    <string name="zAzimuth">AZIMUTH [z]</string>
 
 <!--    Dot (Theta(sub x, y, and z)-->
 
     <string name="theta_dot_x">θ̇̇<sub>x</sub></string>
     <string name="theta_dot_y">θ̇̇<sub>y</sub></string>
     <string name="theta_dot_z">θ̇̇<sub>z</sub></string>
-
-<!--    The special string for theta dot, double theta dot -->
-
-<!--    <string name="theta_dot_x">θ̇x</string>-->
-<!--    <string name="theta_dot_y">θ̇y</string>-->
-<!--    <string name="theta_dot_z">θ̇z</string>-->
-<!--    <string name="theta_double_dot_x">θ̈x</string>-->
-<!--    <string name="theta_double_dot_y">θ̈y</string>-->
-<!--    <string name="theta_double_dot_z">θ̈z</string>-->
 
 </resources>
