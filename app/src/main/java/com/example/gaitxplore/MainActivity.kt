@@ -279,13 +279,11 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
             }
 
-
-
         }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int)
     {
-        //Empty for now
+
     }
     private fun startMeasurement()
     {
@@ -310,8 +308,6 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 0f, locationListener)
-        } else {
-            //Nothing do if the if GPS not being enabled
         }
 
 
@@ -348,9 +344,6 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 0f, locationListener)
             }
-        } else
-        {
-            // Nothing to do if there permsion is not grantted
         }
 
     }
