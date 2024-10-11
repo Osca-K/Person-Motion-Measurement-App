@@ -92,6 +92,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
 
 
+
     //Firebase Ref
 
    private val firebaseDatabase = FirebaseDatabase.getInstance()
@@ -257,13 +258,26 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
 
 
-                     azimuth = normaliseOrientation(azimuth)
-                     pitch = normaliseOrientation(pitch)
-                     roll = normaliseOrientation(roll)
+
+                     azimuth *= -1 // Invert azimuth if needed
+                     pitch *= -1   // Invert pitch if needed
+                     roll *= 1    // Invert roll if needed
+
+
+                     //Zeroing the angles for them to be refecnes
+
+                     azimuth+=180
+                     roll+=180
+                     pitch += 90
+
+
+//                     azimuth = normaliseOrientation(azimuth)
+//                     pitch = normaliseOrientation(pitch)
+//                     roll = normaliseOrientation(roll)
 
                      // Update TextViews
-                     xOrientation.text = String.format("%.3f", roll)
-                     yOrientation.text = String.format("%.3f", pitch)
+                     xOrientation.text = String.format("%.3f", pitch)
+                     yOrientation.text = String.format("%.3f", roll)
                      zOrientation.text = String.format("%.3f", azimuth)
 
 
