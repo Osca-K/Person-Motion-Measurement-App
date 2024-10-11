@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
     private var isRecording  =false
     private var isLogginData =false
-    private var recordingJob: Job? = null
+
 
     //Need Global variable to store Reading to easly transfer to DataBase
 
@@ -230,12 +230,12 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                         zAccel=event.values[2].toDouble()
 
 
-                        zRot = Math.toDegrees(atan2(xAccel, sqrt(yAccel * yAccel + zAccel * zAccel)))
-
-                        xRot = Math.toDegrees(atan2(zAccel, sqrt(xAccel * xAccel + yAccel * yAccel)))
-
-                        xOrientation.text = String.format("%.3f", zRot)
-                        yOrientation.text = String.format("%.3f", xRot)
+//                        zRot = Math.toDegrees(atan2(xAccel, sqrt(yAccel * yAccel + zAccel * zAccel)))
+//
+//                        xRot = Math.toDegrees(atan2(zAccel, sqrt(xAccel * xAccel + yAccel * yAccel)))
+//
+//                        xOrientation.text = String.format("%.3f", zRot)
+//                        yOrientation.text = String.format("%.3f", xRot)
 
 
                         xAcceleration.text = String.format("%.3f",xAccel)
@@ -245,27 +245,30 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                 Sensor.TYPE_ROTATION_VECTOR ->
 
                  {
-                    val rotationMatrix = FloatArray(9)
-                    SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values)
+                     val rotationMatrix = FloatArray(9)
+                     SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values)
 
-                    val orientationAngles = FloatArray(3)
-                    SensorManager.getOrientation(rotationMatrix, orientationAngles)
+                     val orientationAngles = FloatArray(3)
+                     SensorManager.getOrientation(rotationMatrix, orientationAngles)
 
-                     yRot=Math.toDegrees(orientationAngles[0].toDouble())+140.0
-
-                     //+140 is for zeroing the system to be zero when its standing vertically as compared to the internal sensor system which is 0
-
-                     if (yRot > 180) {
-                         yRot -= 360
-                     } else if (yRot < -180) {
-                         yRot += 360
-                     }
+                     var azimuth = Math.toDegrees(orientationAngles[0].toDouble()).toFloat()
+                     var pitch = Math.toDegrees(orientationAngles[1].toDouble()).toFloat()
+                     var roll = Math.toDegrees(orientationAngles[2].toDouble()).toFloat()
 
 
-                     zOrientation.text = String.format("%.3f", yRot)
+
+                     azimuth = (normaliseOrientation(azimuth))+180
+                     pitch = normaliseOrientation(pitch)+180
+                     roll = normaliseOrientation(roll)+180
+
+                     // Update TextViews
+                     xOrientation.text = String.format("%.3f", roll)
+                     yOrientation.text = String.format("%.3f", pitch)
+                     zOrientation.text = String.format("%.3f", azimuth)
 
 
-                }
+
+                 }
 
                 Sensor.TYPE_GYROSCOPE -> {
                     xAngVel=event.values[0].toDouble()
@@ -324,14 +327,19 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         sensorManager.unregisterListener(this)
         locationManager.removeUpdates(locationListener)
 
-
-        // Stop Coroutine
-        recordingJob?.cancel()
-
     }
     override fun onDestroy() {
         super.onDestroy()
         stopMeasurement()
+    }
+    fun normaliseOrientation(angle: Float): Float {
+        var normalized = angle % 360
+        if (normalized > 180) {
+            normalized -= 360
+        } else if (normalized < -180) {
+            normalized += 360
+        }
+        return normalized
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
