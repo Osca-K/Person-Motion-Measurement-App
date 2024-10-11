@@ -20,6 +20,10 @@
     <string name="theta_y">θ<sub>y</sub></string>
     <string name="theta_z">θ<sub>z</sub></string>
 
+    <string name="xPitch">PITCH<sub>(x)</sub></string>
+    <string name="yRoll">ROLL<sub>(y)</sub></string>
+    <string name="zAzimuth">AZIMUTH<sub>(z)</sub></string>
+
 <!--    Dot (Theta(sub x, y, and z)-->
 
     <string name="theta_dot_x">θ̇̇<sub>x</sub></string>

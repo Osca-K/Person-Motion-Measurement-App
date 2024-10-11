@@ -145,10 +145,10 @@
 
     <TextView
         android:id="@+id/tv_ori_x_label"
-        android:layout_width="15dp"
-        android:layout_height="25dp"
+        android:layout_width="94dp"
+        android:layout_height="27dp"
         android:layout_marginBottom="2dp"
-        android:text="@string/theta_x"
+        android:text="@string/xPitch"
         app:layout_constraintBottom_toTopOf="@+id/tvXorientation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.201"
@@ -156,10 +156,10 @@
 
     <TextView
         android:id="@+id/tv_ori_y_label"
-        android:layout_width="15dp"
-        android:layout_height="25dp"
+        android:layout_width="70dp"
+        android:layout_height="28dp"
         android:layout_marginBottom="2dp"
-        android:text="@string/theta_y"
+        android:text="@string/yRoll"
         app:layout_constraintBottom_toTopOf="@+id/tvZorientation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -167,13 +167,13 @@
 
     <TextView
         android:id="@+id/tv_ori_z_label"
-        android:layout_width="15dp"
-        android:layout_height="25dp"
+        android:layout_width="80dp"
+        android:layout_height="28dp"
         android:layout_marginBottom="2dp"
-        android:text="@string/theta_z"
+        android:text="@string/zAzimuth"
         app:layout_constraintBottom_toTopOf="@+id/tvYorientation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.782"
+        app:layout_constraintHorizontal_bias="0.866"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
