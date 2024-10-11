@@ -257,9 +257,9 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
 
 
-                     azimuth = (normaliseOrientation(azimuth))+180
-                     pitch = normaliseOrientation(pitch)+180
-                     roll = normaliseOrientation(roll)+180
+                     azimuth = normaliseOrientation(azimuth)
+                     pitch = normaliseOrientation(pitch)
+                     roll = normaliseOrientation(roll)
 
                      // Update TextViews
                      xOrientation.text = String.format("%.3f", roll)
