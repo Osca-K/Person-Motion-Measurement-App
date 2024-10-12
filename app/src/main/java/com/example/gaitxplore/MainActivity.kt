@@ -246,39 +246,86 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                 Sensor.TYPE_ROTATION_VECTOR ->
 
                  {
+
+
+
                      val rotationMatrix = FloatArray(9)
+                     SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values)
+
+                     // Extract the axis vectors from the rotation matrix
+                     val xAxisX = rotationMatrix[0]
+                     val xAxisY = rotationMatrix[3]
+                     val xAxisZ = rotationMatrix[6]  // Z component of X-axis
+
+                     val yAxisX = rotationMatrix[1]
+                     val yAxisY = rotationMatrix[4]
+                     val yAxisZ = rotationMatrix[7]  // Z component of Y-axis
+
+                     val zAxisX = rotationMatrix[2]
+                     val zAxisY = rotationMatrix[5]
+                     val zAxisZ = rotationMatrix[8]  // Z component of Z-axis
+                     var tiltY: Double = 0.0
+
+// Calculate tilt angles (in degrees)
+                     val tiltX = Math.toDegrees(Math.acos(xAxisZ.toDouble())).toFloat()  // Tilt of X-axis
+                     if (yAxisY < 0) {
+                         tiltY =
+                             (-1 * Math.toDegrees(Math.acos(yAxisZ.toDouble())).toFloat()).toDouble()  // Tilt of Y-axis
+                     } else {
+                         tiltY =
+                             Math.toDegrees(Math.acos(yAxisZ.toDouble())).toFloat().toDouble()  // Tilt of Y-axis without negation
+                     }
+
+// Now you can use tiltX and tiltY as needed
+                     println("TiltX: $tiltX, TiltY: $tiltY")
+
+
+                     val tiltZ = Math.toDegrees(Math.acos(zAxisZ.toDouble())).toFloat()  // Tilt of Z-axis
+
+                     // Update TextViews for the tilt angles of X, Y, and Z axes
+                     //xOrientation.text = String.format("%.3f", tiltX)
+                     yOrientation.text = String.format("%.3f", tiltZ)
+                     zOrientation.text = String.format("%.3f", tiltY)
+//
+                 //
+                 //
+                 //
+                 //
+                 //
+                 //
+                   //  val rotationMatrix = FloatArray(9)
                      SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values)
 
                      val orientationAngles = FloatArray(3)
                      SensorManager.getOrientation(rotationMatrix, orientationAngles)
-
-                     var azimuth = Math.toDegrees(orientationAngles[0].toDouble()).toFloat()
-                     var pitch = Math.toDegrees(orientationAngles[1].toDouble()).toFloat()
-                     var roll = Math.toDegrees(orientationAngles[2].toDouble()).toFloat()
-
-
-
-
-                     azimuth *= -1 // Invert azimuth if needed
-                     pitch *= -1   // Invert pitch if needed
-                     roll *= 1    // Invert roll if needed
-
-
-                     //Zeroing the angles for them to be refecnes
-
-                     azimuth+=180
-                     roll+=180
-                     pitch += 90
-
-
-//                     azimuth = normaliseOrientation(azimuth)
-//                     pitch = normaliseOrientation(pitch)
-//                     roll = normaliseOrientation(roll)
-
-                     // Update TextViews
-                     xOrientation.text = String.format("%.3f", pitch)
-                     yOrientation.text = String.format("%.3f", roll)
-                     zOrientation.text = String.format("%.3f", azimuth)
+//
+//                     var azimuth = Math.toDegrees(orientationAngles[0].toDouble()).toFloat()
+                    var pitch = Math.toDegrees(orientationAngles[1].toDouble()).toFloat()
+//                     var roll = Math.toDegrees(orientationAngles[2].toDouble()).toFloat()
+//
+//
+//
+//
+//                     azimuth *= -1 // Invert azimuth if needed
+                   pitch *= -1   // Invert pitch if needed
+//                     roll *= 1    // Invert roll if needed
+//
+//
+//                     //Zeroing the angles for them to be refecnes
+//
+//                     azimuth+=180
+//                     roll+=180
+                     //pitch += 90
+//
+//
+////                     azimuth = normaliseOrientation(azimuth)
+////                     pitch = normaliseOrientation(pitch)
+////                     roll = normaliseOrientation(roll)
+//
+//                     // Update TextViews
+                    xOrientation.text = String.format("%.3f", pitch)
+//                     yOrientation.text = String.format("%.3f", roll)
+//                     zOrientation.text = String.format("%.3f", azimuth)
 
 
 
