@@ -17,9 +17,9 @@
 
 <!--    Orientation Theta Sub x,y, and Z-->
 
-    <string name="xPitch">PITCH [x]</string>
-    <string name="yRoll">ROLL [y]</string>
-    <string name="zAzimuth">AZIMUTH [z]</string>
+    <string name="xPitch">PITCH [X]</string>
+    <string name="yRoll">ROLL [Y]</string>
+    <string name="zAzimuth">AZIMUTH [Z]</string>
 
 <!--    Dot (Theta(sub x, y, and z)-->
 

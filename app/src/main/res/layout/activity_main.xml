@@ -151,7 +151,7 @@
         android:text="@string/xPitch"
         app:layout_constraintBottom_toTopOf="@+id/tvXorientation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.201"
+        app:layout_constraintHorizontal_bias="0.17"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -167,8 +167,8 @@
 
     <TextView
         android:id="@+id/tv_ori_z_label"
-        android:layout_width="80dp"
-        android:layout_height="28dp"
+        android:layout_width="91dp"
+        android:layout_height="29dp"
         android:layout_marginBottom="2dp"
         android:text="@string/zAzimuth"
         app:layout_constraintBottom_toTopOf="@+id/tvYorientation"
