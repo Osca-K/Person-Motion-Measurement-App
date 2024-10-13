@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
     private var yGravity:Double = 0.0
     private var zGravity:Double = 0.0
 
-    
+
 
     private var zRot:Double = 0.0
     private var yRot:Double = 0.0
@@ -237,9 +237,16 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                     yAccel=event.values[1].toDouble()
                     zAccel=event.values[2].toDouble()
 
-                    xAcceleration.text = String.format("%.3f",xAccel)
-                    yAcceleration.text = String.format("%.3f",yAccel)
-                    zAcceleration.text = String.format("%.3f",zAccel)
+
+
+                }
+                Sensor.TYPE_GRAVITY ->{
+                    xGravity=event.values[0].toDouble()
+                    yGravity=event.values[1].toDouble()
+                    zGravity=event.values[2].toDouble()
+
+                    println("xGravity=$xGravity, yGravity=$yGravity, zGravity=$zGravity")
+
 
                 }
 
@@ -297,7 +304,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                      }
 
 // Now you can use tiltX and tiltY as needed
-                     println("TiltX: $tiltX, TiltY: $tiltY")
+                    // println("TiltX: $tiltX, TiltY: $tiltY")
 
 
                      val tiltZ = Math.toDegrees(Math.acos(zAxisZ.toDouble())).toFloat()  // Tilt of Z-axis
@@ -379,6 +386,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
 
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION), SensorManager.SENSOR_DELAY_GAME)
+        sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY), SensorManager.SENSOR_DELAY_GAME)
 
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME)
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR), SensorManager.SENSOR_DELAY_FASTEST)
