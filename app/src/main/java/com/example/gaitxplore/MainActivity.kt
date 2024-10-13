@@ -78,6 +78,12 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
     private var zAccel:Double = 0.0
 
 
+    private var xGravity:Double = 0.0
+    private var yGravity:Double = 0.0
+    private var zGravity:Double = 0.0
+
+    
+
     private var zRot:Double = 0.0
     private var yRot:Double = 0.0
     private var xRot:Double = 0.0
@@ -223,12 +229,26 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
             when (event.sensor.type)
 
             {
+
+
+                Sensor.TYPE_LINEAR_ACCELERATION ->{
+
+                    xAccel=event.values[0].toDouble()
+                    yAccel=event.values[1].toDouble()
+                    zAccel=event.values[2].toDouble()
+
+                    xAcceleration.text = String.format("%.3f",xAccel)
+                    yAcceleration.text = String.format("%.3f",yAccel)
+                    zAcceleration.text = String.format("%.3f",zAccel)
+
+                }
+
                 Sensor.TYPE_ACCELEROMETER ->
                     {
 
-                        xAccel=event.values[0].toDouble()
-                        yAccel=event.values[1].toDouble()
-                        zAccel=event.values[2].toDouble()
+//                        xAccel=event.values[0].toDouble()
+//                        yAccel=event.values[1].toDouble()
+//                        zAccel=event.values[2].toDouble()
 
 
 //                        zRot = Math.toDegrees(atan2(xAccel, sqrt(yAccel * yAccel + zAccel * zAccel)))
@@ -239,9 +259,9 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 //                        yOrientation.text = String.format("%.3f", xRot)
 
 
-                        xAcceleration.text = String.format("%.3f",xAccel)
-                        yAcceleration.text = String.format("%.3f",yAccel)
-                        zAcceleration.text = String.format("%.3f",zAccel)
+//                        xAcceleration.text = String.format("%.3f",xAccel)
+//                        yAcceleration.text = String.format("%.3f",yAccel)
+//                        zAcceleration.text = String.format("%.3f",zAccel)
                 }
                 Sensor.TYPE_ROTATION_VECTOR ->
 
@@ -357,6 +377,8 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         val sampleRateMs = sampleRate.text.toString().toIntOrNull() ?: 1000 // Default to 1 second
 
 
+
+        sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION), SensorManager.SENSOR_DELAY_GAME)
 
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME)
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR), SensorManager.SENSOR_DELAY_FASTEST)
