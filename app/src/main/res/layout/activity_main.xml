@@ -103,103 +103,127 @@
 
 
     <TextView
-        android:id="@+id/tv_orientation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:text="ORIENTATION"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvYacceleration" />
-
-    <TextView
         android:id="@+id/tvYorientation"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="112dp"
+        android:layout_marginTop="96dp"
         android:background="@drawable/rounded_background"
         android:gravity="center"
         android:padding="8dp"
         android:text="0.0"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvYacceleration" />
-
-    <TextView
-        android:id="@+id/tvXorientation"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="112dp"
-        android:background="@drawable/rounded_background"
-        android:gravity="center"
-        android:padding="8dp"
-        android:text="0.0"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.177"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvXacceleration" />
-
-    <TextView
-        android:id="@+id/tv_ori_x_label"
-        android:layout_width="94dp"
-        android:layout_height="27dp"
-        android:layout_marginBottom="2dp"
-        android:text="@string/xPitch"
-        app:layout_constraintBottom_toTopOf="@+id/tvXorientation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.17"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_ori_y_label"
-        android:layout_width="70dp"
-        android:layout_height="28dp"
-        android:layout_marginBottom="2dp"
-        android:text="@string/yRoll"
-        app:layout_constraintBottom_toTopOf="@+id/tvZorientation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tv_ori_z_label"
         android:layout_width="91dp"
         android:layout_height="29dp"
-        android:layout_marginBottom="2dp"
+        android:layout_marginBottom="4dp"
         android:text="@string/zAzimuth"
         app:layout_constraintBottom_toTopOf="@+id/tvYorientation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.866"
+        app:layout_constraintHorizontal_bias="0.87"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_orientation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="ORIENTATION"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvYacceleration" />
+
+    <TextView
+        android:id="@+id/tv_ori_y_label"
+        android:layout_width="70dp"
+        android:layout_height="28dp"
+        android:layout_marginBottom="4dp"
+        android:text="@string/yRoll"
+        app:layout_constraintBottom_toTopOf="@+id/tvZorientation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_ori_x_label"
+        android:layout_width="94dp"
+        android:layout_height="27dp"
+        android:layout_marginBottom="4dp"
+        android:text="@string/xPitch"
+        app:layout_constraintBottom_toTopOf="@+id/tvXorientation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.171"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tvZorientation"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="112dp"
+        android:layout_marginTop="96dp"
         android:background="@drawable/rounded_background"
         android:gravity="center"
         android:padding="8dp"
         android:text="0.0"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.846"
+        app:layout_constraintHorizontal_bias="0.847"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvZacceleration" />
+
+    <TextView
+        android:id="@+id/tvXorientation"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="96dp"
+        android:background="@drawable/rounded_background"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="0.0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.179"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvXacceleration" />
 
 
     <!-- End of Orientation Measurements and pPROPERTIES  -->
 
 
     <!--  Gyscope for angular acceleration and all-->
+
+
+    <TextView
+        android:id="@+id/tvYangularVelocity"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/rounded_background"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="0.0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_gyroscope" />
+
+    <TextView
+        android:id="@+id/tv_ori_y_label2"
+        android:layout_width="15dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="70dp"
+        android:text="@string/theta_dot_y"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvYorientation" />
+
     <TextView
         android:id="@+id/tv_gyroscope"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="30dp"
         android:text="GYROSCOPE"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -209,90 +233,62 @@
         app:layout_constraintTop_toBottomOf="@+id/tvYorientation" />
 
     <TextView
-        android:id="@+id/tv_ori_x_label2"
-        android:layout_width="15dp"
-        android:layout_height="25dp"
-        android:layout_marginBottom="2dp"
-        android:layout_marginTop="116dp"
-        android:text="@string/theta_dot_x"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.219"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvXorientation" />
-
-    <TextView
-        android:id="@+id/tv_ori_y_label2"
-        android:layout_width="15dp"
-        android:layout_height="25dp"
-        android:layout_marginBottom="2dp"
-        android:layout_marginTop="116dp"
-        android:text="@string/theta_dot_y"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvYorientation" />
-
-    <TextView
         android:id="@+id/tv_ori_z_label2"
         android:layout_width="15dp"
         android:layout_height="25dp"
-        android:layout_marginBottom="2dp"
-        android:layout_marginTop="116dp"
+        android:layout_marginTop="70dp"
         android:text="@string/theta_dot_z"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.763"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvZorientation" />
 
-
     <TextView
         android:id="@+id/tvXangularVelocity"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="140dp"
+        android:layout_marginTop="96dp"
         android:background="@drawable/rounded_background"
         android:gravity="center"
         android:padding="8dp"
         android:text="0.0"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.19"
+        app:layout_constraintHorizontal_bias="0.182"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvXorientation" />
 
     <TextView
-        android:id="@+id/tvYangularVelocity"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        android:background="@drawable/rounded_background"
-        android:gravity="center"
-        android:padding="8dp"
-        android:text="0.0"
+        android:id="@+id/tv_ori_x_label2"
+        android:layout_width="15dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="70dp"
+        android:text="@string/theta_dot_x"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.511"
+        app:layout_constraintHorizontal_bias="0.218"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_gyroscope" />
-
-    <TextView
-        android:id="@+id/tvZangularVelocity"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="140dp"
-        android:background="@drawable/rounded_background"
-        android:gravity="center"
-        android:padding="8dp"
-        android:text="0.0"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.387"
-        app:layout_constraintStart_toEndOf="@+id/tvYangularVelocity"
-        app:layout_constraintTop_toBottomOf="@+id/tvZorientation" />
+        app:layout_constraintTop_toBottomOf="@+id/tvXorientation" />
 
 
     <!-- Global Position System -->
     <TextView
+        android:id="@+id/tvZangularVelocity"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="96dp"
+        android:background="@drawable/rounded_background"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="0.0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.388"
+        app:layout_constraintStart_toEndOf="@+id/tvYangularVelocity"
+        app:layout_constraintTop_toBottomOf="@+id/tvZorientation" />
+
+    <TextView
         android:id="@+id/tv_gyroscope2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="30dp"
         android:text="@string/global_positioning_system"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -316,8 +312,8 @@
 
     <TextView
         android:id="@+id/tvLongitude"
-        android:layout_width="160dp"
-        android:layout_height="wrap_content"
+        android:layout_width="82dp"
+        android:layout_height="34dp"
         android:layout_marginTop="28dp"
         android:layout_marginEnd="40dp"
         android:background="@drawable/rounded_background"
@@ -341,8 +337,8 @@
 
     <TextView
         android:id="@+id/tvLatitude"
-        android:layout_width="160dp"
-        android:layout_height="wrap_content"
+        android:layout_width="83dp"
+        android:layout_height="33dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="40dp"
         android:background="@drawable/rounded_background"
@@ -446,6 +442,17 @@
         android:text="Log Motion into Database"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_gyroscope3" />
+
+    <Button
+        android:id="@+id/ClearData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
+        android:text="Clear Database"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.54"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_gyroscope3" />
 
