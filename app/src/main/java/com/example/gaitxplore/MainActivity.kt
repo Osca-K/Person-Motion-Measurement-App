@@ -99,7 +99,9 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
     private  var gpsLongitude:Double =0.0
     private var gpsSpeed:Double=0.0
 
-    private var sampleRateHz: Int=0;
+
+    private var time: Int = 0
+    private var sampleRateHz: Int = 1000
 
 
     private lateinit var handler: Handler
@@ -172,7 +174,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         sampleRate = findViewById(R.id.etnSampleRate)
 
 
-        // Sensors and locations managers
+
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
         locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
 
@@ -192,8 +194,22 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         btnLogMotion.setOnClickListener()
         {
 
-            isLogginData=true
-            Toast.makeText(this, "Motion is being logged", Toast.LENGTH_SHORT).show()
+            if (!isLogginData) {
+                isLogginData = true
+                btnLogMotion.text = "Stop Log Motion"
+                Toast.makeText(this, "Motion is being logged", Toast.LENGTH_SHORT).show()
+
+                // Get sample rate from EditText and start logging
+                val sampleRateInput = sampleRate.text.toString().toIntOrNull()
+                sampleRateHz = sampleRateInput ?: 1000 // Default to 1 second if input is invalid
+
+                motionLog(sampleRateHz) // Start logging motion
+            } else {
+                isLogginData = false
+                btnLogMotion.text = "Log Motion into Database"
+                Toast.makeText(this, "Motion logging stopped", Toast.LENGTH_SHORT).show()
+                unLogMotion() // Stop logging motion
+            }
 
         }
 
@@ -308,7 +324,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
         Toast.makeText(this, "Motion Sensing is activated", Toast.LENGTH_SHORT).show()
 
-        val sampleRateMs = sampleRate.text.toString().toIntOrNull() ?: 1000 // Default to 1 second
+
 
 
 
@@ -332,12 +348,6 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 0f, locationListener)
         }
 
-        motionLog(sampleRateMs)
-
-
-
-
-        //logDataToDataBase(sampleRateHz, xAccel,yAccel,zAccel,xRot,yRot,zRot, xAngVel, yAngVel,zAngVel, gpsLatitude,gpsLongitude, gpsSpeed)
 
     }
     private fun stopMeasurement()
@@ -371,58 +381,47 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         }
 
     }
-    private fun logDataToDataBase(Rate:Int, xAccel: Double, yAccel: Double, zAccel: Double, xRot:Double, yRot:Double,zRot :Double, xAngVel: Double, yAngVel:Double, zAngVel:Double, lat:Double,lon:Double, speed:Double  )
+    private fun logDataToDataBase( xAccel: Double, yAccel: Double, zAccel: Double, xRot:Double, yRot:Double,zRot :Double, xAngVel: Double, yAngVel:Double, zAngVel:Double, lat:Double,lon:Double, speed:Double  )
 
     {
 
-        var time =0.0
-
-
-        val database = Firebase.database
-        val myRef = database.getReference("SensorData")
-
-
         val sensorDataMap = mapOf(
-            "order" to listOf("time", "xAccel", "yAccel", "zAccel", "xRot", "yRot", "zRot", "xAngVel", "yAngVel", "zAngVel", "latitude", "longitude", "speed"),
-            "data" to mapOf(
-                "time" to time,
-                "xAccel" to xAccel,
-                "yAccel" to yAccel,
-                "zAccel" to zAccel,
-                "xRot" to xRot,
-                "yRot" to yRot,
-                "zRot" to zRot,
-                "xAngVel" to xAngVel,
-                "yAngVel" to yAngVel,
-                "zAngVel" to zAngVel,
-                "latitude" to lat,
-                "longitude" to lon,
-                "speed" to speed
-            )
+            "time" to time,
+            "xAccel" to xAccel,
+            "yAccel" to yAccel,
+            "zAccel" to zAccel,
+            "xRot" to xRot,
+            "yRot" to yRot,
+            "zRot" to zRot,
+            "xAngVel" to xAngVel,
+            "yAngVel" to yAngVel,
+            "zAngVel" to zAngVel,
+            "latitude" to lat,
+            "longitude" to lon,
+            "speed" to speed
         )
 
-        myRef.push().setValue(sensorDataMap)
-
+        sensorDataRef.push().setValue(sensorDataMap)
 
     }
     private fun motionLog(sampleRate: Int){
 
-        btnLogMotion.text="Stop Log Motion into Database"
-
         handler = Handler(Looper.getMainLooper())
         loggingRunnable = Runnable {
-            logDataToDataBase(sampleRateHz, xAccel, yAccel, zAccel, xRot, yRot, zRot, xAngVel, yAngVel, zAngVel, gpsLatitude, gpsLongitude, gpsSpeed)
-
-            handler.postDelayed(loggingRunnable, sampleRate.toLong())
+            if (isLogginData) {
+                logDataToDataBase(xAccel, yAccel, zAccel, xRot, yRot, zRot, xAngVel, yAngVel, zAngVel, gpsLatitude, gpsLongitude, gpsSpeed)
+                time += sampleRate
+                handler.postDelayed(loggingRunnable, sampleRate.toLong())
+            }
         }
-
         handler.post(loggingRunnable)
+
+
+    }
     }
     private  fun unLogMotion()
     {
-        isLogginData=false
-        btnLogMotion.text="Log Motion into Database"
+
     }
 
 
-}
