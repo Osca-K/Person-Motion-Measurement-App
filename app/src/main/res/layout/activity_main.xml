@@ -319,7 +319,7 @@
         android:background="@drawable/rounded_background"
         android:gravity="center"
         android:padding="8dp"
-        android:text="00:00:00"
+        android:text="0.0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_gyroscope2" />
 
@@ -344,7 +344,7 @@
         android:background="@drawable/rounded_background"
         android:gravity="center"
         android:padding="8dp"
-        android:text="@string/_00_00_00"
+        android:text="0.0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvLongitude" />
 
