@@ -203,9 +203,9 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
                 val sampleRateHz = sampleRateInput ?: 50
 
-                val timePerSampleInSeconds = 1 / sampleRateHz
+                val timePerSampleInMilliseconds = (1000 / sampleRateHz)
 
-                motionLog(timePerSampleInSeconds)
+                motionLog(timePerSampleInMilliseconds)
 
 
             } else {
