@@ -125,7 +125,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
             insets
         }
 
-     // Trying to request permission ealry before trying to access the sensors (Was getting error before this..I should remember
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
             ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
@@ -133,7 +133,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         }
 
 
-        //Linking the textview for displaying the results with the ID from  UI of xml
+
 
       // Accelration
 
@@ -194,11 +194,16 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                 btnLogMotion.text = "Stop Log Motion"
                 Toast.makeText(this, "Motion is being logged", Toast.LENGTH_SHORT).show()
 
-                // Get sample rate from EditText and start logging
-                val sampleRateInput = sampleRate.text.toString().toIntOrNull()
-                sampleRateHz = sampleRateInput ?: 1000 // Default to 1 second if input is invalid
 
-                motionLog(sampleRateHz) // Start logging motion
+                val sampleRateInput = sampleRate.text.toString().toIntOrNull()
+
+                val sampleRateHz = sampleRateInput ?: 50
+
+                val timePerSampleInSeconds = 1 / sampleRateHz
+
+                motionLog(timePerSampleInSeconds)
+                
+
             } else {
                 isLogginData = false
                 btnLogMotion.text = "Log Motion into Database"
@@ -224,7 +229,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                 gpstotalDistance += it.distanceTo(location)
             }
 
-            // Update the previous location
+
             gpspreviousLocation = location
 
 
@@ -347,7 +352,6 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION), 1)
             return
         }
-
 
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 0f, locationListener)
