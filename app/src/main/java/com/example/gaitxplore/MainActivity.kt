@@ -59,6 +59,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
     private lateinit var  btnActivate: Button
     private lateinit var  btnLogMotion:Button
+    private  lateinit var btnClearDataBase:Button
 
 
     private var isRecording  =false
@@ -94,7 +95,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
 
     private var time: Int = 0
-    private var sampleRateHz: Int = 1000
+
 
 
     private lateinit var handler: Handler
@@ -166,6 +167,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
         btnActivate=findViewById(R.id.btnRun)
         btnLogMotion=findViewById(R.id.btnLogMotion)
+        btnClearDataBase=findViewById(R.id.btnClearData)
         sampleRate = findViewById(R.id.etnSampleRate)
 
 
@@ -186,6 +188,8 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
             }
 
         }
+
+
         btnLogMotion.setOnClickListener()
         {
 
@@ -202,16 +206,24 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                 val timePerSampleInSeconds = 1 / sampleRateHz
 
                 motionLog(timePerSampleInSeconds)
-                
+
 
             } else {
                 isLogginData = false
                 btnLogMotion.text = "Log Motion into Database"
                 Toast.makeText(this, "Motion logging stopped", Toast.LENGTH_SHORT).show()
-                unLogMotion() // Stop logging motion
+
             }
 
         }
+        btnClearDataBase.setOnClickListener()
+        {
+            clearDataBase()
+        }
+//
+
+
+
 
     }
 
@@ -373,7 +385,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
     override fun onDestroy() {
         super.onDestroy()
         stopMeasurement()
-        unLogMotion()
+
     }
 
 
@@ -429,8 +441,13 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
     }
     }
-    private  fun unLogMotion()
+    private  fun clearDataBase()
     {
+
+        val firebaseDatabase = FirebaseDatabase.getInstance()
+        val sensorDataRef = firebaseDatabase.getReference("SensorData")
+
+        sensorDataRef.removeValue()
 
     }
 
