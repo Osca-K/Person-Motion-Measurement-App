@@ -13,6 +13,33 @@
 
 
     <TextView
+        android:id="@+id/tv_ori_x_label3"
+
+        android:layout_width="wrap_content"
+        android:layout_height="31dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="16dp"
+        android:text="Speed(m/s) "
+        app:layout_constraintEnd_toStartOf="@+id/tvSpeed"
+        app:layout_constraintHorizontal_bias="0.143"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_ori_x_label5" />
+
+    <TextView
+        android:id="@+id/tvSpeed"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/rounded_background"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="@string/_0_0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.872"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvLatitude" />
+
+    <TextView
         android:id="@+id/tv_acceleration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -301,9 +328,9 @@
     <TextView
         android:id="@+id/tv_ori_x_label4"
 
-        android:layout_width="wrap_content"
-        android:layout_height="31dp"
-        android:layout_marginTop="28dp"
+        android:layout_width="73dp"
+        android:layout_height="29dp"
+        android:layout_marginTop="10dp"
         android:text="Longitude"
         app:layout_constraintEnd_toStartOf="@+id/tvLongitude"
         app:layout_constraintHorizontal_bias="0.259"
@@ -314,7 +341,7 @@
         android:id="@+id/tvLongitude"
         android:layout_width="82dp"
         android:layout_height="34dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="40dp"
         android:background="@drawable/rounded_background"
         android:gravity="center"
@@ -326,8 +353,8 @@
     <TextView
         android:id="@+id/tv_ori_x_label5"
 
-        android:layout_width="wrap_content"
-        android:layout_height="31dp"
+        android:layout_width="51dp"
+        android:layout_height="24dp"
         android:layout_marginTop="24dp"
         android:text="@string/latitude"
         app:layout_constraintEnd_toStartOf="@+id/tvLatitude"
@@ -348,75 +375,75 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvLongitude" />
 
+    <!-- End of GPS CONTROLS AND Properties-->
+
+    <!--Button Content -->
+
+    <!--End of all the controls and properties of the UI -->
+
+    <!--    LOGGING THE DATA OF MOTION -->
+
     <TextView
         android:id="@+id/tv_ori_x_label6"
 
         android:layout_width="wrap_content"
         android:layout_height="31dp"
-        android:layout_marginTop="20dp"
-        android:text="Speed(m/s) "
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="60dp"
+        android:text="Distance (m) "
         app:layout_constraintEnd_toStartOf="@+id/tvSpeed"
-        app:layout_constraintHorizontal_bias="0.205"
+        app:layout_constraintHorizontal_bias="0.142"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_ori_x_label5" />
 
     <TextView
-        android:id="@+id/tvSpeed"
+        android:id="@+id/tvDistance"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="56dp"
         android:background="@drawable/rounded_background"
         android:gravity="center"
         android:padding="8dp"
         android:text="@string/_0_0"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.872"
+        app:layout_constraintHorizontal_bias="0.881"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvLatitude" />
 
-    <!-- End of GPS CONTROLS AND Properties-->
-
-    <!--Button Content -->
     <Button
         android:id="@+id/btnRun"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="168dp"
+        android:layout_marginTop="208dp"
         android:backgroundTint="@color/design_default_color_primary"
         android:padding="8dp"
         android:text="Start Application Motion"
         android:textColor="@android:color/white"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_gyroscope2" />
 
-    <!--End of all the controls and properties of the UI -->
-
-<!--    LOGGING THE DATA OF MOTION -->
-
-    <TextView
-        android:id="@+id/tv_gyroscope3"
+    <Button
+        android:id="@+id/btnLogMotion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="MOTION LOGGING "
-        android:textSize="18sp"
-        android:textStyle="bold"
+        android:layout_marginTop="60dp"
+        android:text="Log Motion into Database"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.54"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnRun" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_gyroscope3" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="28dp"
         android:text="Sampling rate (Hz)"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintHorizontal_bias="0.158"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_gyroscope3" />
 
@@ -424,35 +451,37 @@
         android:id="@+id/etnSampleRate"
         android:layout_width="52dp"
         android:layout_height="51dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
 
         android:ems="10"
         android:inputType="text"
         android:text="0.0"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.881"
+        app:layout_constraintHorizontal_bias="0.887"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_gyroscope3" />
 
-    <Button
-        android:id="@+id/btnLogMotion"
+    <TextView
+        android:id="@+id/tv_gyroscope3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:text="Log Motion into Database"
+        android:layout_marginTop="20dp"
+        android:text="MOTION LOGGING "
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_gyroscope3" />
+        app:layout_constraintTop_toBottomOf="@+id/btnRun" />
 
     <Button
         android:id="@+id/ClearData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="124dp"
         android:text="Clear Database"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.54"
+        app:layout_constraintHorizontal_bias="0.547"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_gyroscope3" />
 

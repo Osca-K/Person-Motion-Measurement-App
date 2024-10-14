@@ -24,17 +24,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.google.firebase.Firebase
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.database
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlin.math.atan2
-import kotlin.math.roundToInt
-import kotlin.math.sqrt
 import kotlin.text.*
 
 
@@ -62,6 +52,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
     private lateinit var  latitude : TextView
     private lateinit var  longitude : TextView
     private lateinit var  speed : TextView
+    private lateinit var  distance: TextView
 
     private lateinit var sampleRate :EditText
 
@@ -98,6 +89,8 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
     private var gpsLatitude :Double=0.0
     private  var gpsLongitude:Double =0.0
     private var gpsSpeed:Double=0.0
+    private var gpspreviousLocation: Location? = null
+    private var gpstotalDistance: Float = 0f
 
 
     private var time: Int = 0
@@ -166,6 +159,8 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
       latitude=findViewById(R.id.tvLatitude)
       longitude=findViewById(R.id.tvLongitude)
       speed=findViewById(R.id.tvSpeed)
+      distance=findViewById(R.id.tvDistance)
+
         // Button
 
 
@@ -225,10 +220,20 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
             gpsSpeed = location.speed.toDouble()
 
 
+            gpspreviousLocation?.let {
+                gpstotalDistance += it.distanceTo(location)
+            }
+
+            // Update the previous location
+            gpspreviousLocation = location
+
+
 
             latitude.text = String.format("%.3f", gpsLatitude)
             longitude.text = String.format("%.3f", gpsLongitude)
             speed.text = String.format("%.3f", gpsSpeed)
+
+
 
 
         }
@@ -381,7 +386,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         }
 
     }
-    private fun logDataToDataBase( xAccel: Double, yAccel: Double, zAccel: Double, xRot:Double, yRot:Double,zRot :Double, xAngVel: Double, yAngVel:Double, zAngVel:Double, lat:Double,lon:Double, speed:Double  )
+    private fun logDataToDataBase( xAccel: Double, yAccel: Double, zAccel: Double, xRot:Double, yRot:Double,zRot :Double, xAngVel: Double, yAngVel:Double, zAngVel:Double, lat:Double,lon:Double, speed:Double,distance: Float  )
 
     {
 
@@ -398,7 +403,8 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
             "zAngVel" to zAngVel,
             "latitude" to lat,
             "longitude" to lon,
-            "speed" to speed
+            "speed" to speed,
+            "distance" to distance
         )
 
         sensorDataRef.push().setValue(sensorDataMap)
@@ -409,7 +415,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         handler = Handler(Looper.getMainLooper())
         loggingRunnable = Runnable {
             if (isLogginData) {
-                logDataToDataBase(xAccel, yAccel, zAccel, xRot, yRot, zRot, xAngVel, yAngVel, zAngVel, gpsLatitude, gpsLongitude, gpsSpeed)
+                logDataToDataBase(xAccel, yAccel, zAccel, xRot, yRot, zRot, xAngVel, yAngVel, zAngVel, gpsLatitude, gpsLongitude, gpsSpeed,gpstotalDistance)
                 time += sampleRate
                 handler.postDelayed(loggingRunnable, sampleRate.toLong())
             }
@@ -423,5 +429,6 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
     {
 
     }
+
 
 
