@@ -275,27 +275,31 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                     yAccel=event.values[1].toDouble()
                     zAccel=event.values[2].toDouble()
 
+                    xAcceleration.text = String.format("%.3f",xAccel)
+                    yAcceleration.text = String.format("%.3f",yAccel)
+                    zAcceleration.text = String.format("%.3f",zAccel)
+
 
 
                 }
                 Sensor.TYPE_GRAVITY ->{
-                    xGravity=event.values[0].toDouble()
-                    yGravity=event.values[1].toDouble()
-                    zGravity=event.values[2].toDouble()
+//                    xGravity=event.values[0].toDouble()
+//                    yGravity=event.values[1].toDouble()
+//                    zGravity=event.values[2].toDouble()
 
                 }
 
                 Sensor.TYPE_ACCELEROMETER ->
                     {
 
-                        xAccel=event.values[0].toDouble()
-                        yAccel=event.values[1].toDouble()
-                        zAccel=event.values[2].toDouble()
-
-
-                        xAcceleration.text = String.format("%.3f",xAccel)
-                        yAcceleration.text = String.format("%.3f",yAccel)
-                        zAcceleration.text = String.format("%.3f",zAccel)
+//                        xAccel=event.values[0].toDouble()
+//                        yAccel=event.values[1].toDouble()
+//                        zAccel=event.values[2].toDouble()
+//
+//
+//                        xAcceleration.text = String.format("%.3f",xAccel)
+//                        yAcceleration.text = String.format("%.3f",yAccel)
+//                        zAcceleration.text = String.format("%.3f",zAccel)
                 }
 
                 TYPE_ORIENTATION -> {
