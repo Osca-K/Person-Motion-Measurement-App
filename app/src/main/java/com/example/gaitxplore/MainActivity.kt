@@ -14,16 +14,19 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlin.text.*
 
@@ -108,6 +111,9 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
    private val firebaseDatabase = FirebaseDatabase.getInstance()
    private val sensorDataRef = firebaseDatabase.getReference("SensorData")
+
+   private var sessionCounter = 1
+   private var currentSessionRef: DatabaseReference? = null
 
 
 
@@ -218,9 +224,28 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         }
         btnClearDataBase.setOnClickListener()
         {
-            clearDataBase()
+
+
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Clearing Database")
+            builder.setMessage("Cofirm to clear database?")
+
+            builder.setPositiveButton("Yes") { dialog, _ ->
+                clearDataBase()
+                dialog.dismiss()
+            }
+
+            builder.setNegativeButton("No") { dialog, _ ->
+                dialog.dismiss()
+            }
+            val dialog = builder.create()
+            dialog.show()
+
+
+
+
         }
-//
+
 
 
 
@@ -322,7 +347,8 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                 Sensor.TYPE_ROTATION_VECTOR ->
 
                  {
-                     //Roation vector didnt wqork well
+
+
 
                  }
 
@@ -360,7 +386,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION), SensorManager.SENSOR_DELAY_GAME)
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME)
-        sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR), SensorManager.SENSOR_DELAY_FASTEST)
+        sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR), SensorManager.SENSOR_DELAY_GAME)
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE), SensorManager.SENSOR_DELAY_GAME)
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
@@ -402,7 +428,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                 ActivityCompat.checkSelfPermission(
                     this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 0f, locationListener)
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 50, 0f, locationListener)
             }
         }
 
@@ -413,22 +439,24 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
         val sensorDataMap = mapOf(
             "time" to time / 1000,
-            "xAccel" to String.format("%.5f", xAccel),
-            "yAccel" to String.format("%.5f", yAccel),
-            "zAccel" to String.format("%.5f", zAccel),
-            "xRot" to String.format("%.5f", xRot),
-            "yRot" to String.format("%.5f", yRot),
-            "zRot" to String.format("%.5f", zRot),
-            "xAngVel" to String.format("%.5f", xAngVel),
-            "yAngVel" to String.format("%.5f", yAngVel),
-            "zAngVel" to String.format("%.5f", zAngVel),
-            "latitude" to String.format("%.5f", lat),
-            "longitude" to String.format("%.5f", lon),
-            "speed" to String.format("%.5f", speed),
-            "distance" to String.format("%.5f", distance)
+            "xAccel" to xAccel,
+            "yAccel" to yAccel,
+            "zAccel" to zAccel,
+            "xRot" to xRot,
+            "yRot" to yRot,
+            "zRot" to zRot,
+            "xAngVel" to xAngVel,
+            "yAngVel" to yAngVel,
+            "zAngVel" to zAngVel,
+            "latitude" to lat,
+            "longitude" to lon,
+            "speed" to speed,
+            "distance" to distance
         )
 
-        sensorDataRef.push().setValue(sensorDataMap)
+        currentSessionRef?.push()?.setValue(sensorDataMap)
+
+        //sensorDataRef.push().setValue(sensorDataMap)
 
     }
     private fun motionLog(sampleRate: Int){
@@ -443,6 +471,9 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         }
         handler.post(loggingRunnable)
 
+        currentSessionRef = firebaseDatabase.getReference("SensorData$sessionCounter")
+        sessionCounter++
+
 
     }
     }
@@ -450,9 +481,27 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
     {
 
         val firebaseDatabase = FirebaseDatabase.getInstance()
-        val sensorDataRef = firebaseDatabase.getReference("SensorData")
+        val rootRef = firebaseDatabase.getReference("")
 
-        sensorDataRef.removeValue()
+
+        rootRef.get().addOnSuccessListener { dataSnapshot ->
+            for (childSnapshot in dataSnapshot.children) {
+
+                if (childSnapshot.key?.startsWith("SensorData") == true) {
+
+                    childSnapshot.ref.removeValue().addOnCompleteListener { task ->
+
+                    }
+                }
+            }
+        }.addOnFailureListener { exception -> }
+
+
+
+//        val firebaseDatabase = FirebaseDatabase.getInstance()
+//        val sensorDataRef = firebaseDatabase.getReference("SensorData")
+//
+//        sensorDataRef.removeValue()
 
     }
 
