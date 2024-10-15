@@ -246,9 +246,9 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
 
 
-            latitude.text = String.format("%.3f", gpsLatitude)
-            longitude.text = String.format("%.3f", gpsLongitude)
-            speed.text = String.format("%.3f", gpsSpeed)
+            latitude.text = String.format("%.2f", gpsLatitude)
+            longitude.text = String.format("%.2f", gpsLongitude)
+            speed.text = String.format("%.2f", gpsSpeed)
 
 
 
@@ -275,9 +275,9 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                     yAccel=event.values[1].toDouble()
                     zAccel=event.values[2].toDouble()
 
-                    xAcceleration.text = String.format("%.3f",xAccel)
-                    yAcceleration.text = String.format("%.3f",yAccel)
-                    zAcceleration.text = String.format("%.3f",zAccel)
+                    xAcceleration.text = String.format("%.2f",xAccel)
+                    yAcceleration.text = String.format("%.2f",yAccel)
+                    zAcceleration.text = String.format("%.2f",zAccel)
 
 
 
@@ -297,6 +297,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 //                        zAccel=event.values[2].toDouble()
 //
 //
+
 //                        xAcceleration.text = String.format("%.3f",xAccel)
 //                        yAcceleration.text = String.format("%.3f",yAccel)
 //                        zAcceleration.text = String.format("%.3f",zAccel)
@@ -313,9 +314,9 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                     yRot=pitch
                     zRot=azimuth
 
-                    xOrientation.text = String.format("%.3f", roll)
-                    yOrientation.text = String.format("%.3f", pitch)
-                    zOrientation.text = String.format("%.3f", azimuth)
+                    xOrientation.text = String.format("%.2f", roll)
+                    yOrientation.text = String.format("%.2f", pitch)
+                    zOrientation.text = String.format("%.2f", azimuth)
 
                 }
                 Sensor.TYPE_ROTATION_VECTOR ->
@@ -330,9 +331,9 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                     yAngVel=event.values[1].toDouble()
                     zAngVel=event.values[2].toDouble()
 
-                    xAngularVelocity.text = String.format("%.3f", xAngVel)
-                    yAngularVelocity.text = String.format("%.3f",yAngVel)
-                    zAngularVelocity.text = String.format("%.3f",zAngVel)
+                    xAngularVelocity.text = String.format("%.2f", xAngVel)
+                    yAngularVelocity.text = String.format("%.2f",yAngVel)
+                    zAngularVelocity.text = String.format("%.2f",zAngVel)
                 }
 
             }
@@ -370,7 +371,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         }
 
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 0f, locationListener)
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 50, 0f, locationListener)
         }
 
 
@@ -411,20 +412,20 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
     {
 
         val sensorDataMap = mapOf(
-            "time" to time,
-            "xAccel" to xAccel,
-            "yAccel" to yAccel,
-            "zAccel" to zAccel,
-            "xRot" to xRot,
-            "yRot" to yRot,
-            "zRot" to zRot,
-            "xAngVel" to xAngVel,
-            "yAngVel" to yAngVel,
-            "zAngVel" to zAngVel,
-            "latitude" to lat,
-            "longitude" to lon,
-            "speed" to speed,
-            "distance" to distance
+            "time" to time / 1000,
+            "xAccel" to String.format("%.5f", xAccel),
+            "yAccel" to String.format("%.5f", yAccel),
+            "zAccel" to String.format("%.5f", zAccel),
+            "xRot" to String.format("%.5f", xRot),
+            "yRot" to String.format("%.5f", yRot),
+            "zRot" to String.format("%.5f", zRot),
+            "xAngVel" to String.format("%.5f", xAngVel),
+            "yAngVel" to String.format("%.5f", yAngVel),
+            "zAngVel" to String.format("%.5f", zAngVel),
+            "latitude" to String.format("%.5f", lat),
+            "longitude" to String.format("%.5f", lon),
+            "speed" to String.format("%.5f", speed),
+            "distance" to String.format("%.5f", distance)
         )
 
         sensorDataRef.push().setValue(sensorDataMap)
