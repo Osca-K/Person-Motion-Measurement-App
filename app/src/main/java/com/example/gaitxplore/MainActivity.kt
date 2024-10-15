@@ -34,7 +34,6 @@ import kotlin.text.*
 class MainActivity : AppCompatActivity() , SensorEventListener{
 
 
-
     private lateinit var  sensorManager: SensorManager
     private lateinit var  locationManager: LocationManager
 
@@ -140,8 +139,6 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         }
 
 
-
-
       // Accelration
 
         xAcceleration=findViewById(R.id.tvXacceleration)
@@ -170,13 +167,12 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
         // Button
 
-
         btnActivate=findViewById(R.id.btnRun)
         btnLogMotion=findViewById(R.id.btnLogMotion)
         btnClearDataBase=findViewById(R.id.btnClearData)
+
+
         sampleRate = findViewById(R.id.etnSampleRate)
-
-
 
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
         locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
@@ -192,9 +188,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
             {
                 startMeasurement()
             }
-
         }
-
 
         btnLogMotion.setOnClickListener()
         {
@@ -220,35 +214,25 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                 Toast.makeText(this, "Motion logging stopped", Toast.LENGTH_SHORT).show()
 
             }
-
         }
         btnClearDataBase.setOnClickListener()
         {
 
-
             val builder = AlertDialog.Builder(this)
             builder.setTitle("Clearing Database")
-            builder.setMessage("Cofirm to clear database?")
+            builder.setMessage("Confirm to clear database?")
 
             builder.setPositiveButton("Yes") { dialog, _ ->
                 clearDataBase()
                 dialog.dismiss()
             }
-
             builder.setNegativeButton("No") { dialog, _ ->
                 dialog.dismiss()
             }
             val dialog = builder.create()
             dialog.show()
 
-
-
-
         }
-
-
-
-
 
     }
 
@@ -274,8 +258,6 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
             latitude.text = String.format("%.2f", gpsLatitude)
             longitude.text = String.format("%.2f", gpsLongitude)
             speed.text = String.format("%.2f", gpsSpeed)
-
-
 
 
         }
@@ -317,7 +299,8 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                 Sensor.TYPE_ACCELEROMETER ->
                     {
 
-//                        xAccel=event.values[0].toDouble()
+//                  Not using it , it include graviy
+                    //                        xAccel=event.values[0].toDouble()
 //                        yAccel=event.values[1].toDouble()
 //                        zAccel=event.values[2].toDouble()
 //
@@ -347,9 +330,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                 Sensor.TYPE_ROTATION_VECTOR ->
 
                  {
-
-
-
+                     //not using it..
                  }
 
                 Sensor.TYPE_GYROSCOPE -> {
@@ -361,7 +342,6 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                     yAngularVelocity.text = String.format("%.2f",yAngVel)
                     zAngularVelocity.text = String.format("%.2f",zAngVel)
                 }
-
             }
 
         }
@@ -376,9 +356,6 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         btnActivate.text = "Stop Motion Sensing"
 
         Toast.makeText(this, "Motion Sensing is activated", Toast.LENGTH_SHORT).show()
-
-
-
 
 
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION), SensorManager.SENSOR_DELAY_GAME)
@@ -399,15 +376,11 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 50, 0f, locationListener)
         }
-
-
     }
     private fun stopMeasurement()
     {
-
         isRecording = false
         "Start Motion Sensing".also { btnActivate.text = it }
-
 
         sensorManager.unregisterListener(this)
         locationManager.removeUpdates(locationListener)
@@ -418,7 +391,6 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         stopMeasurement()
 
     }
-
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -431,7 +403,6 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 50, 0f, locationListener)
             }
         }
-
     }
     private fun logDataToDataBase( xAccel: Double, yAccel: Double, zAccel: Double, xRot:Double, yRot:Double,zRot :Double, xAngVel: Double, yAngVel:Double, zAngVel:Double, lat:Double,lon:Double, speed:Double,distance: Float  )
 
@@ -456,7 +427,6 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
         currentSessionRef?.push()?.setValue(sensorDataMap)
 
-        //sensorDataRef.push().setValue(sensorDataMap)
 
     }
     private fun motionLog(sampleRate: Int){
@@ -474,8 +444,8 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         currentSessionRef = firebaseDatabase.getReference("SensorData$sessionCounter")
         sessionCounter++
 
-
     }
+
     }
     private  fun clearDataBase()
     {
@@ -495,13 +465,6 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                 }
             }
         }.addOnFailureListener { exception -> }
-
-
-
-//        val firebaseDatabase = FirebaseDatabase.getInstance()
-//        val sensorDataRef = firebaseDatabase.getReference("SensorData")
-//
-//        sensorDataRef.removeValue()
 
     }
 
