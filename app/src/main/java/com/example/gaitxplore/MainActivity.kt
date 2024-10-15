@@ -1,6 +1,7 @@
 package com.example.gaitxplore
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.hardware.Sensor
 import android.hardware.Sensor.TYPE_ORIENTATION
@@ -119,6 +120,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
 
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
@@ -237,6 +239,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
     }
 
     private val locationListener = object : LocationListener {
+        @SuppressLint("DefaultLocale")
         @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
         override fun onLocationChanged(location: Location) {
 
@@ -268,6 +271,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         override fun onProviderDisabled(provider: String) {}
     }
 
+    @SuppressLint("DefaultLocale")
     override fun onSensorChanged(event: SensorEvent?) {
         if (event != null)
 
@@ -350,6 +354,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
     {
 
     }
+    @SuppressLint("SetTextI18n")
     private fun startMeasurement()
     {
         isRecording = true
