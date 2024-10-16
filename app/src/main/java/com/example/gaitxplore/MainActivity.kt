@@ -317,24 +317,51 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
                 TYPE_ORIENTATION -> {
 
-                    val azimuth = Math.toDegrees(event.values[0].toDouble())
-                    val pitch = Math.toDegrees(event.values[1].toDouble())
-                    val roll = Math.toDegrees(event.values[2].toDouble())
-
-
-                    xRot=roll
-                    yRot=pitch
-                    zRot=azimuth
-
-                    xOrientation.text = String.format("%.2f", roll)
-                    yOrientation.text = String.format("%.2f", pitch)
-                    zOrientation.text = String.format("%.2f", azimuth)
+//                    val azimuth = Math.toDegrees(event.values[0].toDouble())
+//                    val pitch = Math.toDegrees(event.values[1].toDouble())
+//                    val roll = Math.toDegrees(event.values[2].toDouble())
+//
+//
+//                    xRot=roll
+//                    yRot=pitch
+//                    zRot=azimuth
+//
+//                    xOrientation.text = String.format("%.2f", roll)
+//                    yOrientation.text = String.format("%.2f", pitch)
+//                    zOrientation.text = String.format("%.2f", azimuth)
 
                 }
                 Sensor.TYPE_ROTATION_VECTOR ->
 
                  {
-                     //not using it..
+                     val rotationMatrix = FloatArray(9)
+                     val orientationAngles = FloatArray(3)
+
+                     // Get the rotation matrix from the rotation vector
+                     SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values)
+
+                     // Get the orientation angles (azimuth, pitch, and roll) from the rotation matrix
+                     SensorManager.getOrientation(rotationMatrix, orientationAngles)
+
+                     // Convert the angles from radians to degrees
+                     val azimuth = Math.toDegrees(orientationAngles[0].toDouble())
+                     val pitch = Math.toDegrees(orientationAngles[1].toDouble())
+                     val roll = Math.toDegrees(orientationAngles[2].toDouble())
+
+                     // Assign the values to variables (if needed)
+                     xRot = pitch
+                     yRot =  roll
+                     zRot = azimuth
+
+                     yRot = if (roll>0.0 )
+                         roll-180.0
+                     else
+                         roll+180.0
+
+                     // Update the text views to display the orientation angles
+                     xOrientation.text = String.format("%.2f", pitch)
+                     yOrientation.text = String.format("%.2f",  yRot)
+                     zOrientation.text = String.format("%.2f", azimuth)
                  }
 
                 Sensor.TYPE_GYROSCOPE -> {
