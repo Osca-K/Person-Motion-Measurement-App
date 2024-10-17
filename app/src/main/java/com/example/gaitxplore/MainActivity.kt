@@ -342,41 +342,135 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                  {
 
 
+//                     val rotationMatrix = FloatArray(9)
+//                     val orientationAngles = FloatArray(3)
+//
+//
+//                     SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values)
+//
+//
+//                     SensorManager.getOrientation(rotationMatrix, orientationAngles)
+//
+//                     // Convert the angles from radians to degrees
+//                     val azimuth = Math.toDegrees(orientationAngles[0].toDouble())
+//                     val pitch = Math.toDegrees(orientationAngles[1].toDouble())
+//                     val roll = Math.toDegrees(orientationAngles[2].toDouble())
+//
+//
+//
+//
+//                     xRot = if (pitch>0.0 )
+//                         pitch-90
+//                     else
+//                         pitch+90
+//
+////                     yRot = if (roll>0.0 )
+////                         roll-180.0
+////                     else
+////                         roll+180.0
+//                    yRot=roll
+////
+////                    if(zGravity>0.0){
+////                        xRot*=-1
+////                        yRot=roll+180.0
+////
+////                    }
+////
+////                     else{
+////
+//////                        yRot=-roll+180.0
+//////                        yRot*=-1
+////
+////                     }
+//
+//
+//
+//
+//
+//
+//                     // Update the text views to display the orientation angles
+//                     xOrientation.text = String.format("%.2f", xRot)
+//                     yOrientation.text = String.format("%.2f",  yRot)
+//                     zOrientation.text = String.format("%.2f", azimuth)
+
+                     //=============================================
+
+
                      val rotationMatrix = FloatArray(9)
-                     val orientationAngles = FloatArray(3)
-
-
                      SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values)
 
+                     // Extract the axis vectors from the rotation matrix
+                     val xAxisX = rotationMatrix[0]
+                     val xAxisY = rotationMatrix[3]
+                     val xAxisZ = rotationMatrix[6]  // Z component of X-axis
 
+                     val yAxisX = rotationMatrix[1]
+                     val yAxisY = rotationMatrix[4]
+                     val yAxisZ = rotationMatrix[7]  // Z component of Y-axis
+
+                     val zAxisX = rotationMatrix[2]
+                     val zAxisY = rotationMatrix[5]
+                     val zAxisZ = rotationMatrix[8]  // Z component of Z-axis
+                     var tiltY: Double = 0.0
+
+// Calculate tilt angles (in degrees)
+                     val tiltX = Math.toDegrees(Math.acos(xAxisZ.toDouble())).toFloat()  // Tilt of X-axis
+                     if (yAxisY < 0) {
+                         tiltY =
+                             (-1 * Math.toDegrees(Math.acos(yAxisZ.toDouble())).toFloat()).toDouble()  // Tilt of Y-axis
+                     } else {
+                         tiltY =
+                             Math.toDegrees(Math.acos(yAxisZ.toDouble())).toFloat().toDouble()  // Tilt of Y-axis without negation
+                     }
+
+// Now you can use tiltX and tiltY as needed
+                   //  println("TiltX: $tiltX, TiltY: $tiltY")
+
+
+                     val tiltZ = Math.toDegrees(Math.acos(zAxisZ.toDouble())).toFloat()  // Tilt of Z-axis
+
+                     // Update TextViews for the tilt angles of X, Y, and Z axes
+                     // xOrientation.text = String.format("%.3f", tiltX)
+                     yOrientation.text = String.format("%.3f", tiltZ)
+                     zOrientation.text = String.format("%.3f", tiltY)
+
+//                     val rotationMatrix = FloatArray(9)
+//                     SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values)
+//
+//
+                     val orientationAngles = FloatArray(3)
                      SensorManager.getOrientation(rotationMatrix, orientationAngles)
+//
+//
+//
+//                     //var azimuth = Math.toDegrees(orientationAngles[0].toDouble()).toFloat()
+//
+//
+//                     val azimuth = rotationMatrix[8]
+//
+//                     // Calculate the tilt angle (in degrees)
+//                     val tilt = Math.toDegrees(Math.acos(azimuth.toDouble())).toFloat()
+//
+//                     // Update TextView for the tilt angle of the Z-axis
+//                     //zTiltOrientation.text = String.format("%.3f", tilt)
+//
+//
+//                     var pitch = Math.toDegrees(orientationAngles[1].toDouble()).toFloat()
+                     var roll = Math.toDegrees(orientationAngles[2].toDouble()).toFloat()
+//
+//
+//
+////                     azimuth = normaliseOrientation(azimuth)
+////                     pitch = normaliseOrientation(pitch)
+                     roll = normaliseOrientation(roll)
+//
+//                     // Update TextViews
+                     xOrientation.text = String.format("%.3f", -1*roll)
+//                     yOrientation.text = String.format("%.3f", -1*pitch)
+//                     zOrientation.text = String.format("%.3f", tilt)
 
-                     // Convert the angles from radians to degrees
-                     val azimuth = Math.toDegrees(orientationAngles[0].toDouble())
-                     val pitch = Math.toDegrees(orientationAngles[1].toDouble())
-                     val roll = Math.toDegrees(orientationAngles[2].toDouble())
 
 
-
-
-                     xRot = if (pitch>0.0 )
-                         pitch-90
-                     else
-                         pitch+90
-
-                    if(zGravity>0.0)
-                        xRot*=-1
-
-
-                     yRot = if (roll>0.0 )
-                         roll-180.0
-                     else
-                         roll+180.0
-
-                     // Update the text views to display the orientation angles
-                     xOrientation.text = String.format("%.2f", xRot)
-                     yOrientation.text = String.format("%.2f",  yRot)
-                     zOrientation.text = String.format("%.2f", azimuth)
 
 
 
@@ -419,7 +513,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION), SensorManager.SENSOR_DELAY_GAME)
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME)
-        sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR), SensorManager.SENSOR_DELAY_GAME)
+        sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR), SensorManager.SENSOR_DELAY_FASTEST)
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE), SensorManager.SENSOR_DELAY_GAME)
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_GAME_ROTATION_VECTOR), SensorManager.SENSOR_DELAY_GAME)
 
@@ -524,5 +618,14 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         }.addOnFailureListener { exception -> }
 
     }
+fun normaliseOrientation(angle: Float): Float {
+    var normalized = angle % 360
+    if (normalized > 180) {
+        normalized -= 360
+    } else if (normalized < -180) {
+        normalized += 360
+    }
+    return normalized
+}
 
 
