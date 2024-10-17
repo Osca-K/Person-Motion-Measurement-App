@@ -272,7 +272,8 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
     }
 
     @SuppressLint("DefaultLocale")
-    override fun onSensorChanged(event: SensorEvent?) {
+    override fun onSensorChanged(event: SensorEvent?)
+    {
         if (event != null)
 
 
@@ -286,17 +287,22 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                     yAccel=event.values[1].toDouble()
                     zAccel=event.values[2].toDouble()
 
-                    xAcceleration.text = String.format("%.2f",xAccel)
-                    yAcceleration.text = String.format("%.2f",yAccel)
-                    zAcceleration.text = String.format("%.2f",zAccel)
+//                    xAcceleration.text = String.format("%.2f",xAccel)
+//                    yAcceleration.text = String.format("%.2f",yAccel)
+//                    zAcceleration.text = String.format("%.2f",zAccel)
 
 
 
                 }
                 Sensor.TYPE_GRAVITY ->{
-//                    xGravity=event.values[0].toDouble()
-//                    yGravity=event.values[1].toDouble()
-//                    zGravity=event.values[2].toDouble()
+                    xGravity=event.values[0].toDouble()
+                    yGravity=event.values[1].toDouble()
+                    zGravity=event.values[2].toDouble()
+
+                    xAcceleration.text = String.format("%.2f",xGravity)
+                    yAcceleration.text = String.format("%.2f",yGravity)
+                    zAcceleration.text = String.format("%.2f",zGravity)
+
 
                 }
 
@@ -334,13 +340,15 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                 Sensor.TYPE_ROTATION_VECTOR ->
 
                  {
+
+
                      val rotationMatrix = FloatArray(9)
                      val orientationAngles = FloatArray(3)
 
-                     // Get the rotation matrix from the rotation vector
+
                      SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values)
 
-                     // Get the orientation angles (azimuth, pitch, and roll) from the rotation matrix
+
                      SensorManager.getOrientation(rotationMatrix, orientationAngles)
 
                      // Convert the angles from radians to degrees
@@ -348,10 +356,17 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                      val pitch = Math.toDegrees(orientationAngles[1].toDouble())
                      val roll = Math.toDegrees(orientationAngles[2].toDouble())
 
-                     // Assign the values to variables (if needed)
-                     xRot = pitch
-                     yRot =  roll
-                     zRot = azimuth
+
+
+
+                     xRot = if (pitch>0.0 )
+                         pitch-90
+                     else
+                         pitch+90
+
+                    if(zGravity>0.0)
+                        xRot*=-1
+
 
                      yRot = if (roll>0.0 )
                          roll-180.0
@@ -359,9 +374,13 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                          roll+180.0
 
                      // Update the text views to display the orientation angles
-                     xOrientation.text = String.format("%.2f", pitch)
+                     xOrientation.text = String.format("%.2f", xRot)
                      yOrientation.text = String.format("%.2f",  yRot)
                      zOrientation.text = String.format("%.2f", azimuth)
+
+
+
+
                  }
 
                 Sensor.TYPE_GYROSCOPE -> {
@@ -373,7 +392,12 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                     yAngularVelocity.text = String.format("%.2f",yAngVel)
                     zAngularVelocity.text = String.format("%.2f",zAngVel)
                 }
+                Sensor.TYPE_GAME_ROTATION_VECTOR ->
+                    {
+
+                }
             }
+
 
         }
 
@@ -397,6 +421,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME)
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR), SensorManager.SENSOR_DELAY_GAME)
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE), SensorManager.SENSOR_DELAY_GAME)
+        sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_GAME_ROTATION_VECTOR), SensorManager.SENSOR_DELAY_GAME)
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
             ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -499,6 +524,5 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         }.addOnFailureListener { exception -> }
 
     }
-
 
 
