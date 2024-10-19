@@ -360,8 +360,21 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
 
                      val tiltX = Math.toDegrees(Math.acos(xAxisZ.toDouble())).toFloat()
+                     xRot=tiltX-90
                      val tiltY = Math.toDegrees(Math.acos(yAxisZ.toDouble())).toFloat().toDouble()
+
+
+                    if(xGravity<0)
+                        yRot=-tiltY
+                    else
+                         yRot=tiltY
+
+
+        
                      val tiltZ = Math.toDegrees(Math.acos(zAxisZ.toDouble())).toFloat()
+                     zRot=tiltZ-90
+
+
 
 
                      println("TiltX: $tiltX, TiltY: $tiltY , TiltZ:$tiltZ")
