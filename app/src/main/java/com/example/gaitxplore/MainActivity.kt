@@ -4,7 +4,6 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.hardware.Sensor
-import android.hardware.Sensor.TYPE_ORIENTATION
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
@@ -28,6 +27,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import kotlin.math.acos
+import kotlin.math.atan2
 import kotlin.text.*
 
 
@@ -96,25 +97,20 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
     private var gpstotalDistance: Float = 0f
 
 
-    private var time: Int = 0
 
+    //Var for DataBase inmplementation
 
+    private var sampleNumber: Int = 0
 
     private lateinit var handler: Handler
     private lateinit var loggingRunnable: Runnable
 
 
 
-
-    //Firebase Ref
-
    private val firebaseDatabase = FirebaseDatabase.getInstance()
-   private val sensorDataRef = firebaseDatabase.getReference("SensorData")
 
    private var sessionCounter = 1
    private var currentSessionRef: DatabaseReference? = null
-
-
 
 
 
@@ -201,18 +197,16 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
 
                 val sampleRateInput = sampleRate.text.toString().toIntOrNull()
-
                 val sampleRateHz = sampleRateInput ?: 50
-
-                val timePerSampleInMilliseconds = (1000 / sampleRateHz)
-
-                motionLog(timePerSampleInMilliseconds)
+                motionLog(sampleRateHz)
 
 
             } else {
                 isLogginData = false
                 btnLogMotion.text = "Log Motion into Database"
                 Toast.makeText(this, "Motion logging stopped", Toast.LENGTH_SHORT).show()
+                sampleNumber = 0
+                gpstotalDistance = 0f
 
             }
         }
@@ -255,7 +249,6 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
             gpspreviousLocation = location
 
 
-
             latitude.text = String.format("%.2f", gpsLatitude)
             longitude.text = String.format("%.2f", gpsLongitude)
             speed.text = String.format("%.2f", gpsSpeed)
@@ -289,48 +282,16 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                     yAcceleration.text = String.format("%.2f",yAccel)
                     zAcceleration.text = String.format("%.2f",zAccel)
 
-
-
                 }
                 Sensor.TYPE_GRAVITY ->{
                     xGravity=event.values[0].toDouble()
                     yGravity=event.values[1].toDouble()
                     zGravity=event.values[2].toDouble()
 
+                    //To check the direction of orientation
 
                 }
 
-                Sensor.TYPE_ACCELEROMETER ->
-                    {
-
-//                  Not using it , it include graviy
-                    //                        xAccel=event.values[0].toDouble()
-//                        yAccel=event.values[1].toDouble()
-//                        zAccel=event.values[2].toDouble()
-//
-//
-
-//                        xAcceleration.text = String.format("%.3f",xAccel)
-//                        yAcceleration.text = String.format("%.3f",yAccel)
-//                        zAcceleration.text = String.format("%.3f",zAccel)
-                }
-
-                TYPE_ORIENTATION -> {
-
-//                    val azimuth = Math.toDegrees(event.values[0].toDouble())
-//                    val pitch = Math.toDegrees(event.values[1].toDouble())
-//                    val roll = Math.toDegrees(event.values[2].toDouble())
-//
-//
-//                    xRot=roll
-//                    yRot=pitch
-//                    zRot=azimuth
-//
-//                    xOrientation.text = String.format("%.2f", roll)
-//                    yOrientation.text = String.format("%.2f", pitch)
-//                    zOrientation.text = String.format("%.2f", azimuth)
-
-                }
                 Sensor.TYPE_ROTATION_VECTOR ->
 
                  {
@@ -338,38 +299,26 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                      val rotationMatrix = FloatArray(9)
                      SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values)
 
-
-                     val xAxisX = rotationMatrix[0]
-                     val xAxisY = rotationMatrix[3]
-                     val xAxisZ = rotationMatrix[6]  // Z component of X-axis
-
-                     val yAxisX = rotationMatrix[1]
-                    val yAxisY = rotationMatrix[4]
-                     val yAxisZ = rotationMatrix[7]  // Z component of Y-axis
-
-                     val zAxisX = rotationMatrix[2]
-                     val zAxisY = rotationMatrix[5]
-                     val zAxisZ = rotationMatrix[8]  // Z component of Z-axis
+                     val xAxisZ = rotationMatrix[6]
+                     val zAxisZ = rotationMatrix[8]
 
 
-
-                     val tiltX = Math.toDegrees(Math.acos(xAxisZ.toDouble())).toFloat()
+                     val tiltX = Math.toDegrees(acos(xAxisZ.toDouble())).toFloat()
                      zRotYaw=-1.0*(tiltX-90.0)
                    
                    
                    
-                     val tiltY = Math.toDegrees(Math.atan2(rotationMatrix[2].toDouble(), rotationMatrix[5].toDouble()))
+                     val tiltY = Math.toDegrees(atan2(rotationMatrix[2].toDouble(), rotationMatrix[5].toDouble()))
 
-                   
-                    
-                    if(tiltY<0)
-                        yRotRoll=-1.0*(180+tiltY)
-                    else
-                         yRotRoll=1.0*(180-tiltY)
 
-               
+
+                     yRotRoll = if(tiltY<0)
+                         -1.0*(180+tiltY)
+                     else
+                         1.0*(180-tiltY)
+
         
-                     val tiltZ = Math.toDegrees(Math.acos(zAxisZ.toDouble())).toFloat()
+                     val tiltZ = Math.toDegrees(acos(zAxisZ.toDouble())).toFloat()
                      xRotPitch=tiltZ-90.0
 
 
@@ -413,11 +362,11 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION), SensorManager.SENSOR_DELAY_GAME)
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY), SensorManager.SENSOR_DELAY_GAME)
 
-        sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION), SensorManager.SENSOR_DELAY_GAME)
-        sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME)
+
+
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR), SensorManager.SENSOR_DELAY_FASTEST)
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE), SensorManager.SENSOR_DELAY_GAME)
-        sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_GAME_ROTATION_VECTOR), SensorManager.SENSOR_DELAY_GAME)
+
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
             ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -457,18 +406,18 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
             }
         }
     }
-    private fun logDataToDataBase( xAccel: Double, yAccel: Double, zAccel: Double, xRot:Double, yRot:Double,zRot :Double, xAngVel: Double, yAngVel:Double, zAngVel:Double, lat:Double,lon:Double, speed:Double,distance: Float  )
+    private fun logDataToDataBase(xAccel: Double, yAccel: Double, zAccel: Double, xRotPitch:Double, yRotRoll:Double, zRotYaw :Double, xAngVel: Double, yAngVel:Double, zAngVel:Double, lat:Double, lon:Double, speed:Double, distance: Float  )
 
     {
 
         val sensorDataMap = mapOf(
-            "time" to time / 1000,
+            "Sample No" to sampleNumber ,
             "xAccel" to xAccel,
             "yAccel" to yAccel,
             "zAccel" to zAccel,
-            "xRot" to xRot,
-            "yRot" to yRot,
-            "zRot" to zRot,
+            "Pitch" to xRotPitch,
+            "Roll" to yRotRoll,
+            "Yaw" to zRotYaw,
             "xAngVel" to xAngVel,
             "yAngVel" to yAngVel,
             "zAngVel" to zAngVel,
@@ -488,7 +437,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         loggingRunnable = Runnable {
             if (isLogginData) {
                 logDataToDataBase(xAccel, yAccel, zAccel, zRotYaw, yRotRoll, xRotPitch, xAngVel, yAngVel, zAngVel, gpsLatitude, gpsLongitude, gpsSpeed,gpstotalDistance)
-                time += sampleRate
+                sampleNumber +=1
                 handler.postDelayed(loggingRunnable, sampleRate.toLong())
             }
         }
@@ -512,12 +461,12 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
                 if (childSnapshot.key?.startsWith("SensorData") == true) {
 
-                    childSnapshot.ref.removeValue().addOnCompleteListener { task ->
+                    childSnapshot.ref.removeValue().addOnCompleteListener {
 
                     }
                 }
             }
-        }.addOnFailureListener { exception -> }
+        }.addOnFailureListener { }
 
     }
 
