@@ -19,7 +19,7 @@
 
     <string name="xPitch">PITCH [X]</string>
     <string name="yRoll">ROLL [Y]</string>
-    <string name="zAzimuth">AZIMUTH [Z]</string>
+    <string name="zAzimuth">YAW [Z]</string>
 
 <!--    Dot (Theta(sub x, y, and z)-->
 

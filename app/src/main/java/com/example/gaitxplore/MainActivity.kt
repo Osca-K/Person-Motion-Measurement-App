@@ -15,7 +15,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -82,9 +81,9 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
 
 
-    private var zRot:Double = 0.0
-    private var yRot:Double = 0.0
-    private var xRot:Double = 0.0
+    private var xRotPitch:Double = 0.0
+    private var yRotRoll:Double = 0.0
+    private var zRotYaw:Double = 0.0
 
     private var xAngVel:Double = 0.0
     private var yAngVel:Double = 0.0
@@ -243,7 +242,6 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
         override fun onLocationChanged(location: Location) {
 
-
             gpsLatitude = location.latitude
             gpsLongitude = location.longitude
             gpsSpeed = location.speed.toDouble()
@@ -287,9 +285,9 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                     yAccel=event.values[1].toDouble()
                     zAccel=event.values[2].toDouble()
 
-//                    xAcceleration.text = String.format("%.2f",xAccel)
-//                    yAcceleration.text = String.format("%.2f",yAccel)
-//                    zAcceleration.text = String.format("%.2f",zAccel)
+                    xAcceleration.text = String.format("%.2f",xAccel)
+                    yAcceleration.text = String.format("%.2f",yAccel)
+                    zAcceleration.text = String.format("%.2f",zAccel)
 
 
 
@@ -298,10 +296,6 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                     xGravity=event.values[0].toDouble()
                     yGravity=event.values[1].toDouble()
                     zGravity=event.values[2].toDouble()
-
-                    xAcceleration.text = String.format("%.2f",xGravity)
-                    yAcceleration.text = String.format("%.2f",yGravity)
-                    zAcceleration.text = String.format("%.2f",zGravity)
 
 
                 }
@@ -345,44 +339,43 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                      SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values)
 
 
-//                     val xAxisX = rotationMatrix[0]
-//                     val xAxisY = rotationMatrix[3]
+                     val xAxisX = rotationMatrix[0]
+                     val xAxisY = rotationMatrix[3]
                      val xAxisZ = rotationMatrix[6]  // Z component of X-axis
 
-//                     val yAxisX = rotationMatrix[1]
-//                     val yAxisY = rotationMatrix[4]
+                     val yAxisX = rotationMatrix[1]
+                    val yAxisY = rotationMatrix[4]
                      val yAxisZ = rotationMatrix[7]  // Z component of Y-axis
 
-//                     val zAxisX = rotationMatrix[2]
-//                     val zAxisY = rotationMatrix[5]
+                     val zAxisX = rotationMatrix[2]
+                     val zAxisY = rotationMatrix[5]
                      val zAxisZ = rotationMatrix[8]  // Z component of Z-axis
 
 
 
                      val tiltX = Math.toDegrees(Math.acos(xAxisZ.toDouble())).toFloat()
-                     xRot=tiltX-90
-                     val tiltY = Math.toDegrees(Math.acos(yAxisZ.toDouble())).toFloat().toDouble()
+                     zRotYaw=-1.0*(tiltX-90.0)
+                   
+                   
+                   
+                     val tiltY = Math.toDegrees(Math.atan2(rotationMatrix[2].toDouble(), rotationMatrix[5].toDouble()))
 
-
-                    if(xGravity<0)
-                        yRot=-tiltY
+                   
+                    
+                    if(tiltY<0)
+                        yRotRoll=-1.0*(180+tiltY)
                     else
-                         yRot=tiltY
+                         yRotRoll=1.0*(180-tiltY)
 
-
+               
         
                      val tiltZ = Math.toDegrees(Math.acos(zAxisZ.toDouble())).toFloat()
-                     zRot=tiltZ-90
+                     xRotPitch=tiltZ-90.0
 
 
-
-
-                     println("TiltX: $tiltX, TiltY: $tiltY , TiltZ:$tiltZ")
-
-
-                     yOrientation.text = String.format("%.3f", tiltZ)
-                     zOrientation.text = String.format("%.3f", tiltY)
-
+                     xOrientation.text = String.format("%.3f",xRotPitch )
+                     yOrientation.text = String.format("%.3f", yRotRoll)
+                     zOrientation.text = String.format("%.3f",zRotYaw )
 
                  }
 
@@ -494,7 +487,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         handler = Handler(Looper.getMainLooper())
         loggingRunnable = Runnable {
             if (isLogginData) {
-                logDataToDataBase(xAccel, yAccel, zAccel, xRot, yRot, zRot, xAngVel, yAngVel, zAngVel, gpsLatitude, gpsLongitude, gpsSpeed,gpstotalDistance)
+                logDataToDataBase(xAccel, yAccel, zAccel, zRotYaw, yRotRoll, xRotPitch, xAngVel, yAngVel, zAngVel, gpsLatitude, gpsLongitude, gpsSpeed,gpstotalDistance)
                 time += sampleRate
                 handler.postDelayed(loggingRunnable, sampleRate.toLong())
             }
