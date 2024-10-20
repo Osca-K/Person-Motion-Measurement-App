@@ -174,6 +174,8 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
         locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
 
+        btnLogMotion.isEnabled = false
+
 
         btnActivate.setOnClickListener()
         {
@@ -249,11 +251,9 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
             gpspreviousLocation = location
 
-
             latitude.text = String.format("%.2f", gpsLatitude)
             longitude.text = String.format("%.2f", gpsLongitude)
             speed.text = String.format("%.2f", gpsSpeed)
-
 
         }
 
@@ -338,9 +338,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                     yAngularVelocity.text = String.format("%.2f",yAngVel)
                     zAngularVelocity.text = String.format("%.2f",zAngVel)
                 }
-
             }
-
 
         }
 
@@ -355,13 +353,11 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         btnActivate.text = "Stop Motion Sensing"
 
         Toast.makeText(this, "Motion Sensing is activated", Toast.LENGTH_SHORT).show()
+        btnLogMotion.isEnabled = true
 
 
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION), SensorManager.SENSOR_DELAY_GAME)
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY), SensorManager.SENSOR_DELAY_GAME)
-
-
-
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR), SensorManager.SENSOR_DELAY_FASTEST)
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE), SensorManager.SENSOR_DELAY_GAME)
 
@@ -381,6 +377,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
     {
         isRecording = false
         "Start Motion Sensing".also { btnActivate.text = it }
+        btnLogMotion.isEnabled = false
 
         sensorManager.unregisterListener(this)
         locationManager.removeUpdates(locationListener)
@@ -407,7 +404,6 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
     private fun logDataToDataBase(xAccel: Double, yAccel: Double, zAccel: Double, xRotPitch:Double, yRotRoll:Double, zRotYaw :Double, xAngVel: Double, yAngVel:Double, zAngVel:Double, lat:Double, lon:Double, speed:Double, distance: Float  )
 
     {
-
         val sensorDataMap = mapOf(
             "Sample No" to sampleNumber ,
             "xAccel" to xAccel,
@@ -426,7 +422,6 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         )
 
         currentSessionRef?.push()?.setValue(sensorDataMap)
-
 
     }
     private fun motionLog(sampleRate: Int){
