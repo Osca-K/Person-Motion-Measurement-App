@@ -379,9 +379,19 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         "Start Motion Sensing".also { btnActivate.text = it }
         btnLogMotion.isEnabled = false
 
+        if (isLogginData) {
+            isLogginData = false
+            btnLogMotion.text = "Log Motion into Database"
+            Toast.makeText(this, "Motion logging stopped", Toast.LENGTH_SHORT).show()
+            sampleNumber = 0
+            gpstotalDistance = 0f
+        }
+
+
         sensorManager.unregisterListener(this)
         locationManager.removeUpdates(locationListener)
 
+        handler.removeCallbacks(loggingRunnable)
     }
     override fun onDestroy() {
         super.onDestroy()
