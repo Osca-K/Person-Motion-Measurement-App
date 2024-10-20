@@ -1,5 +1,7 @@
 package com.example.gaitxplore
 
+//Osca Kholopha
+
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
@@ -33,7 +35,6 @@ import kotlin.text.*
 
 
 class MainActivity : AppCompatActivity() , SensorEventListener{
-
 
     private lateinit var  sensorManager: SensorManager
     private lateinit var  locationManager: LocationManager
@@ -93,8 +94,8 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
     private var gpsLatitude :Double=0.0
     private  var gpsLongitude:Double =0.0
     private var gpsSpeed:Double=0.0
-    private var gpspreviousLocation: Location? = null
-    private var gpstotalDistance: Float = 0f
+    private var gpsPreviousLocation: Location? = null
+    private var gpsTotalDistance: Float = 0f
 
 
 
@@ -106,13 +107,10 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
     private lateinit var loggingRunnable: Runnable
 
 
-
-   private val firebaseDatabase = FirebaseDatabase.getInstance()
+    private val firebaseDatabase = FirebaseDatabase.getInstance()
 
    private var sessionCounter = 1
    private var currentSessionRef: DatabaseReference? = null
-
-
 
 
     @SuppressLint("SetTextI18n")
@@ -168,11 +166,12 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         btnLogMotion=findViewById(R.id.btnLogMotion)
         btnClearDataBase=findViewById(R.id.btnClearData)
 
-
+        //SampleRae Inout
         sampleRate = findViewById(R.id.etnSampleRate)
 
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
         locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
+
 
         btnLogMotion.isEnabled = false
 
@@ -203,14 +202,12 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                 val sampleRateMS=(1000/sampleRateHz)
                 motionLog(sampleRateMS)
 
-
             } else {
                 isLogginData = false
                 btnLogMotion.text = "Log Motion into Database"
                 Toast.makeText(this, "Motion logging stopped", Toast.LENGTH_SHORT).show()
                 sampleNumber = 0
-                gpstotalDistance = 0f
-
+                gpsTotalDistance = 0f
             }
         }
         btnClearDataBase.setOnClickListener()
@@ -244,12 +241,12 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
             gpsSpeed = location.speed.toDouble()
 
 
-            gpspreviousLocation?.let {
-                gpstotalDistance += it.distanceTo(location)
+            gpsPreviousLocation?.let {
+                gpsTotalDistance += it.distanceTo(location)
             }
 
 
-            gpspreviousLocation = location
+            gpsPreviousLocation = location
 
             latitude.text = String.format("%.2f", gpsLatitude)
             longitude.text = String.format("%.2f", gpsLongitude)
@@ -284,44 +281,28 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                     zAcceleration.text = String.format("%.2f",zAccel)
 
                 }
-                Sensor.TYPE_GRAVITY ->{
-                    xGravity=event.values[0].toDouble()
-                    yGravity=event.values[1].toDouble()
-                    zGravity=event.values[2].toDouble()
-
-                    //To check the direction of orientation
-
-                }
 
                 Sensor.TYPE_ROTATION_VECTOR ->
 
                  {
-
                      val rotationMatrix = FloatArray(9)
                      SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values)
 
                      val xAxisZ = rotationMatrix[6]
                      val zAxisZ = rotationMatrix[8]
 
-
                      val tiltX = Math.toDegrees(acos(xAxisZ.toDouble())).toFloat()
                      zRotYaw=-1.0*(tiltX-90.0)
-                   
-                   
-                   
+
                      val tiltY = Math.toDegrees(atan2(rotationMatrix[2].toDouble(), rotationMatrix[5].toDouble()))
-
-
 
                      yRotRoll = if(tiltY<0)
                          -1.0*(180+tiltY)
                      else
                          1.0*(180-tiltY)
 
-        
                      val tiltZ = Math.toDegrees(acos(zAxisZ.toDouble())).toFloat()
                      xRotPitch=tiltZ-90.0
-
 
                      xOrientation.text = String.format("%.3f",xRotPitch )
                      yOrientation.text = String.format("%.3f", yRotRoll)
@@ -342,10 +323,8 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
         }
 
-    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int)
-    {
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) { }
 
-    }
     @SuppressLint("SetTextI18n")
     private fun startMeasurement()
     {
@@ -357,7 +336,6 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
 
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION), SensorManager.SENSOR_DELAY_GAME)
-        sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY), SensorManager.SENSOR_DELAY_GAME)
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR), SensorManager.SENSOR_DELAY_FASTEST)
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE), SensorManager.SENSOR_DELAY_GAME)
 
@@ -373,6 +351,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 50, 0f, locationListener)
         }
     }
+    @SuppressLint("SetTextI18n")
     private fun stopMeasurement()
     {
         isRecording = false
@@ -384,9 +363,8 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
             btnLogMotion.text = "Log Motion into Database"
             Toast.makeText(this, "Motion logging stopped", Toast.LENGTH_SHORT).show()
             sampleNumber = 0
-            gpstotalDistance = 0f
+            gpsTotalDistance = 0f
         }
-
 
         sensorManager.unregisterListener(this)
         locationManager.removeUpdates(locationListener)
@@ -432,14 +410,13 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         )
 
         currentSessionRef?.push()?.setValue(sensorDataMap)
-
     }
     private fun motionLog(sampleRate: Int){
 
         handler = Handler(Looper.getMainLooper())
         loggingRunnable = Runnable {
             if (isLogginData) {
-                logDataToDataBase(xAccel, yAccel, zAccel, zRotYaw, yRotRoll, xRotPitch, xAngVel, yAngVel, zAngVel, gpsLatitude, gpsLongitude, gpsSpeed,gpstotalDistance)
+                logDataToDataBase(xAccel, yAccel, zAccel, zRotYaw, yRotRoll, xRotPitch, xAngVel, yAngVel, zAngVel, gpsLatitude, gpsLongitude, gpsSpeed,gpsTotalDistance)
                 sampleNumber +=1
                 handler.postDelayed(loggingRunnable, sampleRate.toLong())
             }
@@ -454,7 +431,6 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
     }
     private  fun clearDataBase()
     {
-
         val firebaseDatabase = FirebaseDatabase.getInstance()
         val rootRef = firebaseDatabase.getReference("")
 
@@ -472,6 +448,3 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
         }.addOnFailureListener { }
 
     }
-
-
-
