@@ -198,7 +198,8 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
 
                 val sampleRateInput = sampleRate.text.toString().toIntOrNull()
                 val sampleRateHz = sampleRateInput ?: 50
-                motionLog(sampleRateHz)
+                val sampleRateMS=(1000/sampleRateHz)
+                motionLog(sampleRateMS)
 
 
             } else {
@@ -337,10 +338,7 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
                     yAngularVelocity.text = String.format("%.2f",yAngVel)
                     zAngularVelocity.text = String.format("%.2f",zAngVel)
                 }
-                Sensor.TYPE_GAME_ROTATION_VECTOR ->
-                    {
 
-                }
             }
 
 
