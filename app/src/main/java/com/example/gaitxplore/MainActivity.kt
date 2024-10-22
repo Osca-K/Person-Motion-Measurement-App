@@ -77,12 +77,6 @@ class MainActivity : AppCompatActivity() , SensorEventListener{
     private var zAccel:Double = 0.0
 
 
-    private var xGravity:Double = 0.0
-    private var yGravity:Double = 0.0
-    private var zGravity:Double = 0.0
-
-
-
     private var xRotPitch:Double = 0.0
     private var yRotRoll:Double = 0.0
     private var zRotYaw:Double = 0.0

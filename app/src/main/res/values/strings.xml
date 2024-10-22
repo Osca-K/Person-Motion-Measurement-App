@@ -6,13 +6,13 @@
     <string name="_0_0">0.0</string>
     <string name="speed">Speed</string>
     <string name="_00_00_00">00:00:00</string>
-    <string name="latitude">Latitude</string>
+    <string name="latitude">LATITUDE</string>
     <string name="global_positioning_system">GLOBAL POSITIONING SYSTEM</string>
 
 <!--    Acceleration Double Dots-->
-    <string name="x">Ẍ</string>
-    <string name="y">Ÿ</string>
-    <string name="z">Z̈</string>
+    <string name="x">ACCEL [Ẍ]</string>
+    <string name="y">ACCEL [Ÿ]</string>
+    <string name="z">ACCEL [Z̈]</string>
 
 
 <!--    Orientation Theta Sub x,y, and Z-->
@@ -23,8 +23,8 @@
 
 <!--    Dot (Theta(sub x, y, and z)-->
 
-    <string name="theta_dot_x">θ̇̇<sub>x</sub></string>
-    <string name="theta_dot_y">θ̇̇<sub>y</sub></string>
-    <string name="theta_dot_z">θ̇̇<sub>z</sub></string>
+    <string name="theta_dot_x">ANGVEL [X]</string>
+    <string name="theta_dot_y">ANGVEL [Y]</string>
+    <string name="theta_dot_z">ANGVEL [Z]</string>
 
 </resources>
