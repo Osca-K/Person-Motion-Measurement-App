@@ -23,7 +23,12 @@ This project accompanies the MECN4006 report, delivering an Android app that rec
 - `MECN4006 OSCA KHOLOPHA ATK9 PROJECT.pdf` – Full report detailing methodology and results.
 
 ## Build and run
-Prerequisites: Android Studio (AGP 8.7), Android SDK 34, and a JDK compatible with the configured Gradle plugin (JDK 17 recommended).
+Prerequisites:
+- Android Studio (AGP 8.7)
+- Android SDK 34
+- A JDK compatible with the configured Gradle plugin (JDK 17 recommended)
+
+The Gradle wrapper is checked in as executable. If your checkout clears the execute bit, re-apply it before building:
 
 ```bash
 # From the repository root
@@ -31,7 +36,7 @@ chmod +x gradlew
 ./gradlew assembleDebug   # or open in Android Studio and run the app
 ```
 
-Deploy to a device or emulator with motion sensors and grant fine/coarse location permissions when prompted. Logging requires network access to reach Firebase; supply your own `google-services.json` if using a different Firebase project.
+Deploy to a device or emulator with motion sensors and grant fine/coarse location permissions when prompted. Logging requires network access to reach Firebase. Supply your own `google-services.json` if you are using a different Firebase project.
 
 ## Testing
 Run unit tests with:
